@@ -1,6 +1,6 @@
 import pytest
 
-from linked_list import Node
+from linked_list import LinkedList, Node
 
 
 class TestNode:
@@ -27,4 +27,16 @@ class TestNode:
     def test_node_nxt_value_is_None(self):
         """A node should initiate with it's .nxt attribute as None."""
         n = Node(1)
-        not n.nxt
+        assert not n.nxt
+
+
+class TestLinkedListClassHead:
+    def test_LinkedList_initiates_with_head_attribute(self):
+        """A LinkedList initializes with the .head attribute."""
+        lst = LinkedList()
+        assert hasattr(lst, "head")
+
+    def test_LinkedList_initiates_with_head_as_None(self):
+        """A LinkedList initializes with the .head attribute."""
+        lst = LinkedList()
+        assert not lst.head
