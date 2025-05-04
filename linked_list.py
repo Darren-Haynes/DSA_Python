@@ -1,6 +1,6 @@
 class Node:
     def __init__(self, value, nxt=None) -> None:
-        self.data = value
+        self.value = value
         self.nxt = nxt
 
 
@@ -22,6 +22,6 @@ class LinkedList:
         if not self.head:
             return
 
-        return_data = self.head.data
+        return_value = self.head.value
         self.head = self.head.nxt
-        return return_data
+        return return_value
