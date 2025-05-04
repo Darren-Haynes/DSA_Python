@@ -30,3 +30,18 @@ class LinkedList:
         if not self.head:
             return True
         return False
+
+    def _append(self, new_node, current):
+        if not current.nxt:
+            current.nxt = new_node
+            return new_node
+        current = current.nxt
+        return self._append(new_node, current)
+
+    def append(self, value):
+        new_node = Node(value)
+        if not self.head:
+            self.head = new_node
+            return new_node
+
+        return self._append(new_node, self.head)

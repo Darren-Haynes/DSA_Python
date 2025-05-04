@@ -140,3 +140,42 @@ class TestIsEmptyMethod:
         for _ in range(10):
             lst_factory.pop()
         assert lst_factory.is_empty()
+
+
+class TestAppendMethod:
+    def test_append_one_node_correct_head_value(self):
+        """If list empty, head should become the value."""
+        lst = LinkedList()
+        lst.append(1)
+        assert lst.head.value == 1
+
+    def test_append_two_nodes_correct_head_value(self):
+        """When append 2 nodes, the the first appended should be the head"""
+        lst = LinkedList()
+        lst.append(1)
+        lst.append(2)
+        assert lst.head.value == 1
+
+    def test_append_two_nodes_correct_head_correct_nxt_value(self):
+        """When append 2 nodes, the the second appended should be head.nxt's value"""
+        lst = LinkedList()
+        lst.append(1)
+        lst.append(2)
+        assert lst.head.nxt.value == 2
+
+    def test_append_three_nodes_correct_third_node_value(self):
+        """When append 3 nodes, last node appended has corrent value.
+        This is to test recusive function calls itself."""
+        lst = LinkedList()
+        lst.append(1)
+        lst.append(2)
+        lst.append(3)
+        assert lst.head.nxt.nxt.value == 3
+
+    def test_append_three_nodes_correct_third_node_nxt(self):
+        """When append 3 nodes, last node appended next is None"""
+        lst = LinkedList()
+        lst.append(1)
+        lst.append(2)
+        lst.append(3)
+        assert not lst.head.nxt.nxt.nxt
