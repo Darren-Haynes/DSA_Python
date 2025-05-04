@@ -205,3 +205,19 @@ class TestPopRightMethod:
     def test_pop_right_with_three_nodes_returns_correct_value(self, lst_factory):
         """Right pop list with 3 nodes, first node pushed value should return."""
         assert lst_factory.pop_right() == 1
+
+
+class TestClearMethod:
+    def test_clear_with_already_empty_list(self):
+        """Already empty list returns none."""
+        lst = LinkedList()
+        assert not lst.clear()
+
+    def test_clear_method_with_single_node(self, one_node):
+        """Already empty list returns none."""
+        assert not one_node.clear()
+
+    @pytest.mark.lst_factory_data([i for i in range(1, 11)])
+    def test_clear_method_with_ten_nodes(self, lst_factory):
+        """Lst with 10 nodes should return None when cleared."""
+        assert not lst_factory.clear()
