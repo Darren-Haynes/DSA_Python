@@ -221,3 +221,46 @@ class TestClearMethod:
     def test_clear_method_with_ten_nodes(self, lst_factory):
         """Lst with 10 nodes should return None when cleared."""
         assert not lst_factory.clear()
+
+
+class TestDeleteMethod:
+    def test_delete_with_empty_list(self):
+        """Empty list should return None."""
+        lst = LinkedList()
+        assert not lst.delete(1)
+
+    def test_delete_with_single_node_no_match(self, one_node):
+        """List with single non matching node value should return None"""
+        assert not one_node.delete(2)
+
+    def test_delete_with_single_node_match(self, one_node):
+        """List with single matching node value should return matching Node"""
+        match_node = one_node.head
+        assert one_node.delete(1) == match_node
+
+    def test_delete_with_single_node_match_returns_value(self, one_node):
+        """List with single matching node value should return node with correct value."""
+        match_node = one_node.delete(1)
+        assert match_node.value == 1
+
+    def test_delete_with_single_node_match_creates_empty_list(self, one_node):
+        """List with single matching node value should return node with correct value."""
+        one_node.delete(1)
+        assert not one_node.head
+
+    @pytest.mark.lst_factory_data([1, 2])
+    def test_delete_with_2_nodes_no_match(self, lst_factory):
+        """List with 2 non matching nodes should return none"""
+        assert not lst_factory.delete(3)
+
+    @pytest.mark.lst_factory_data([1, 2])
+    def test_delete_with_2_nodes_head_matches(self, lst_factory):
+        """List with single matching node value should return matching Node"""
+        match_node = lst_factory.head
+        assert lst_factory.delete(2) == match_node
+
+    @pytest.mark.lst_factory_data([1, 2])
+    def test_delete_with_2_nodes_returns_correct_value_of_head(self, lst_factory):
+        """List with single matching node value should return node with correct value."""
+        match_node = lst_factory.delete(2)
+        assert match_node.value == 2

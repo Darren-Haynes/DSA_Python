@@ -65,3 +65,25 @@ class LinkedList:
     def clear(self):
         self.head = None
         return
+
+    def _delete(self, previous, current, value):
+        if not current:
+            return
+
+        if current.value == value:
+            return_node = current
+            previous.nxt = current.nxt
+            return return_node
+
+        return self._delete(previous.nxt, current.nxt, value)
+
+    def delete(self, value):
+        if not self.head:
+            return
+
+        if self.head.value == value:
+            return_node = self.head
+            self.head = self.head.nxt
+            return return_node
+
+        return self._delete(self.head, self.head.nxt, value)
