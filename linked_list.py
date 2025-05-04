@@ -45,3 +45,19 @@ class LinkedList:
             return new_node
 
         return self._append(new_node, self.head)
+
+    def pop_right(self):
+        if not self.head:
+            return
+        if not self.head.nxt:
+            return_value = self.head.value
+            self.head = None
+            return return_value
+
+        previous = self.head
+        current = self.head.nxt
+        while current.nxt:
+            previous = current
+            current = current.nxt
+        previous.nxt = None
+        return current.value
