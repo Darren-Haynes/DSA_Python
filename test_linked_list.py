@@ -23,9 +23,9 @@ def lst_factory(request):
 
 class TestNode:
     def test_node_initiates_with_data_attribute(self):
-        """A node object initializes with the 'data' attribute."""
+        """A node object initializes with the 'value' attribute."""
         n = Node(1)
-        assert hasattr(n, "data")
+        assert hasattr(n, "value")
 
     def test_node_initiates_with_nxt_attribute(self):
         """A node object initializes with the 'nxt' attribute."""
@@ -35,7 +35,7 @@ class TestNode:
     def test_node_data_is_correct(self):
         """A node should initiate with the data passed into it's class."""
         n = Node(1)
-        assert n.data == 1
+        assert n.value == 1
 
     def test_TypeError_raised_node_no_data(self):
         """TypeError should raise when a value is not passed to Node class."""
@@ -63,7 +63,7 @@ class TestLinkedListClassHead:
 class TestPushMethod:
     def test_LinkedList_with_1_node_is_head(self, one_node):
         """Push 1 value into Linked List, that value should be the head's data"""
-        assert one_node.head.data == 1
+        assert one_node.head.value == 1
 
     def test_LinkedList_with_1_node_head_nxt_is_none(self, one_node):
         """Push 1 value into Linked List, head.nxt should be None"""
@@ -72,12 +72,12 @@ class TestPushMethod:
     @pytest.mark.lst_factory_data([1, 2])
     def test_LinkedList_with_2_nodes_correct_head(self, lst_factory):
         """Push 2 values into Linked List, last value pushed should be the head's data"""
-        assert lst_factory.head.data == 2
+        assert lst_factory.head.value == 2
 
     @pytest.mark.lst_factory_data([1, 2])
     def test_LinkedList_with_2_nodes_correct_head_nxt_data(self, lst_factory):
         """Push 2 values into Linked List, first value pushed should be head.nxt.data"""
-        assert lst_factory.head.nxt.data == 1
+        assert lst_factory.head.nxt.value == 1
 
     @pytest.mark.lst_factory_data([1, 2])
     def test_LinkedList_with_2_nodes_no_3rd_node(self, lst_factory):
@@ -104,7 +104,7 @@ class TestPopMethod:
     def test_head_value_after_pop_list_with_2_nodes(self, lst_factory):
         """Pop list with 2 nodes, head's value should be first node pushed"""
         lst_factory.pop()
-        assert lst_factory.head.data == 1
+        assert lst_factory.head.value == 1
 
     @pytest.mark.lst_factory_data([1, 2])
     def test_head_nxt_after_pop_list_with_2_nodes(self, lst_factory):
