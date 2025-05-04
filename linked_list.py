@@ -61,3 +61,7 @@ class LinkedList:
             current = current.nxt
         previous.nxt = None
         return current.value
+
+    def clear(self):
+        self.head = None
+        return
