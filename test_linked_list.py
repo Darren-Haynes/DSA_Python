@@ -118,3 +118,25 @@ class TestPopMethod:
         lst_factory.pop()
         lst_factory.pop()
         assert not lst_factory.head
+
+
+class TestIsEmptyMethod:
+    def test_freshly_initialized_list_is_empty(self):
+        """A freshly coined list that has no nodes should be empty."""
+        lst = LinkedList()
+        assert lst.is_empty()
+
+    def test_one_node_added_not_empty(self, one_node):
+        """A freshly coined list that has no nodes should be empty."""
+        assert not one_node.is_empty()
+
+    def test_one_node_added_and_popped(self, one_node):
+        """A list that has one node added and removed should be empty."""
+        one_node.pop()
+        assert one_node.is_empty()
+
+    @pytest.mark.lst_factory_data([i for i in range(1, 11)])
+    def test_add_and_pop_ten_nodes_empty(self, lst_factory):
+        for _ in range(10):
+            lst_factory.pop()
+        assert lst_factory.is_empty()
