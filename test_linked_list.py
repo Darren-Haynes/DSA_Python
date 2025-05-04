@@ -179,3 +179,29 @@ class TestAppendMethod:
         lst.append(2)
         lst.append(3)
         assert not lst.head.nxt.nxt.nxt
+
+
+class TestPopRightMethod:
+    def test_pop_right_empty_list(self):
+        """Empty list should return None."""
+        lst = LinkedList()
+        assert not lst.pop_right()
+
+    def test_pop_right_with_one_node_return_value(self, one_node):
+        """A list with single node should return nodes value"""
+        assert one_node.pop_right() == 1
+
+    def test_pop_right_with_one_node_creates_empty_list(self, one_node):
+        """A list with sinlge node that gets popped should be empty."""
+        one_node.pop_right()
+        assert not one_node.head
+
+    @pytest.mark.lst_factory_data([1, 2])
+    def test_pop_right_with_two_nodes_returns_correct_value(self, lst_factory):
+        """Right pop list with 2 nodes, first node pushed value should return."""
+        assert lst_factory.pop_right() == 1
+
+    @pytest.mark.lst_factory_data([1, 2, 3])
+    def test_pop_right_with_three_nodes_returns_correct_value(self, lst_factory):
+        """Right pop list with 3 nodes, first node pushed value should return."""
+        assert lst_factory.pop_right() == 1
