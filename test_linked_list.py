@@ -83,3 +83,38 @@ class TestPushMethod:
     def test_LinkedList_with_2_nodes_no_3rd_node(self, lst_factory):
         """Push 2 values into Linked List, there should be no 3rd node"""
         assert not lst_factory.head.nxt.nxt
+
+
+class TestPopMethod:
+    def test_pop_empty_head_returns_none(self):
+        """If linked list is empty, popping head returns None."""
+        lst = LinkedList()
+        assert not lst.pop()
+
+    def test_pop_list_with_1_node_returns_correct_value(self, one_node):
+        """If lst has just one node, that value should be popped"""
+        assert one_node.pop() == 1
+
+    def test_pop_list_with_1_node_creates_empty_list(self, one_node):
+        """A list with a single node should be empty after pop method"""
+        one_node.pop()
+        assert not one_node.head
+
+    @pytest.mark.lst_factory_data([1, 2])
+    def test_head_value_after_pop_list_with_2_nodes(self, lst_factory):
+        """Pop list with 2 nodes, head's value should be first node pushed"""
+        lst_factory.pop()
+        assert lst_factory.head.data == 1
+
+    @pytest.mark.lst_factory_data([1, 2])
+    def test_head_nxt_after_pop_list_with_2_nodes(self, lst_factory):
+        """Pop list with 2 nodes, head's nxt should be None."""
+        lst_factory.pop()
+        assert not lst_factory.head.nxt
+
+    @pytest.mark.lst_factory_data([1, 2])
+    def test_list_is_empty_after_popping_twice(self, lst_factory):
+        """Pop twice list with 2 nodes, head should be None."""
+        lst_factory.pop()
+        lst_factory.pop()
+        assert not lst_factory.head

@@ -17,3 +17,11 @@ class LinkedList:
         new_node.nxt = self.head
         self.head = new_node
         return
+
+    def pop(self):
+        if not self.head:
+            return
+
+        return_data = self.head.data
+        self.head = self.head.nxt
+        return return_data
