@@ -25,3 +25,8 @@ class LinkedList:
         return_value = self.head.value
         self.head = self.head.nxt
         return return_value
+
+    def is_empty(self):
+        if not self.head:
+            return True
+        return False
