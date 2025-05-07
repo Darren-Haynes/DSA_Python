@@ -8,6 +8,16 @@ class LinkedList:
     def __init__(self) -> None:
         self.head = None
 
+    def __str__(self):
+        # Print the linked list contents
+        lst_content = "["
+        current = self.head
+        while current:
+            lst_content = lst_content + str(current.value) + ", "
+            current = current.nxt
+        lst_content = lst_content.rstrip(", ")
+        return lst_content + "]"
+
     def push(self, value):
         new_node = Node(value)
         if not self.head:
@@ -87,3 +97,27 @@ class LinkedList:
             return return_node
 
         return self._delete(self.head, self.head.nxt, value)
+
+    def line_print(self, per_line=10):
+        if not self.head:
+            print("[]")
+            return "[]"
+
+        print("[ ")
+        count = -1
+
+        print_string = ""
+        current = self.head
+        while current:
+            count += 1
+            if count == per_line:
+                count = 0
+                print(print_string)
+                print_string = ""
+
+            print_string = print_string + str(current.value) + ", "
+            current = current.nxt
+
+        print(print_string)
+        print("]\n")
+        return self.__str__()

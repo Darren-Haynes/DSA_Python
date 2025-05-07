@@ -1,6 +1,7 @@
 import pytest
 
 from linked_list import LinkedList, Node
+import linked_list
 
 
 @pytest.fixture
@@ -206,6 +207,19 @@ class TestPopRightMethod:
         """Right pop list with 3 nodes, first node pushed value should return."""
         assert lst_factory.pop_right() == 1
 
+    @pytest.mark.lst_factory_data([1, 2])
+    def test_head_nxt_after_pop_list_with_2_nodes(self, lst_factory):
+        """Pop list with 2 nodes, head's nxt should be None."""
+        lst_factory.pop()
+        assert not lst_factory.head.nxt
+
+    @pytest.mark.lst_factory_data([1, 2])
+    def test_list_is_empty_after_popping_twice(self, lst_factory):
+        """Pop twice list with 2 nodes, head should be None."""
+        lst_factory.pop()
+        lst_factory.pop()
+        assert not lst_factory.head
+
 
 class TestClearMethod:
     def test_clear_with_already_empty_list(self):
@@ -264,3 +278,48 @@ class TestDeleteMethod:
         """List with single matching node value should return node with correct value."""
         match_node = lst_factory.delete(2)
         assert match_node.value == 2
+
+
+class TestSpecialMethodstr:
+    def test_str_when_list_empty(self):
+        """__str__ should return empty list string."""
+        ll = LinkedList()
+        assert ll.__str__() == "[]"
+
+    def test_str_when_one_item_in_list(self, one_node):
+        """__str__ should return list string with single item."""
+        assert one_node.__str__() == "[1]"
+
+    @pytest.mark.lst_factory_data([1, 2])
+    def test_str_when_2_items_in_list(self, lst_factory):
+        """__str__ should return list string with 2 items."""
+        assert lst_factory.__str__() == "[2, 1]"
+
+    @pytest.mark.lst_factory_data([1, 2, 3, 4, 5])
+    def test_str_when_5_items_in_list(self, lst_factory):
+        """__str__ should return list string with 5 items."""
+        assert lst_factory.__str__() == "[5, 4, 3, 2, 1]"
+
+    @pytest.mark.lst_factory_data([i for i in range(1, 101)])
+    def test_str_when_100_items_in_list(self, lst_factory):
+        """__str__ should return list string with 100 items."""
+        python_lst = [i for i in range(100, 0, -1)]
+        assert lst_factory.__str__() == python_lst.__str__()
+
+
+class TestLinePrintMethod:
+    def test_line_print_empty_list(self):
+        """Empty list should return empty list string."""
+        ll = LinkedList()
+        assert ll.line_print() == "[]"
+
+    @pytest.mark.lst_factory_data([1, 2, 3, 4, 5])
+    def test_line_print_5_items(self, lst_factory):
+        """5 item list should return __str__."""
+        assert lst_factory.line_print() == "[5, 4, 3, 2, 1]"
+
+    @pytest.mark.lst_factory_data([i for i in range(1, 12)])
+    def test_line_print_11_items(self, lst_factory):
+        """Test argument per_line"""
+        python_lst = [i for i in range(11, 0, -1)]
+        assert lst_factory.line_print() == python_lst.__str__()
