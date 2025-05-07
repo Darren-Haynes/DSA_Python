@@ -279,6 +279,47 @@ class TestDeleteMethod:
         match_node = lst_factory.delete(2)
         assert match_node.value == 2
 
+    @pytest.mark.lst_factory_data([1, 2, 3])
+    def test_delete_with_3_nodes_no_match(self, lst_factory):
+        """List with 3 non matching nodes should return none"""
+        assert not lst_factory.delete(4)
+
+    @pytest.mark.lst_factory_data([1, 2, 3])
+    def test_delete_with_3_nodes_head_matches(self, lst_factory):
+        """List with single matching node value should return matching Node"""
+        match_node = lst_factory.head
+        assert lst_factory.delete(3) == match_node
+
+    @pytest.mark.lst_factory_data([1, 2, 3])
+    def test_delete_with_3_nodes_returns_correct_value_of_head(self, lst_factory):
+        """List with single matching node value should return node with correct value."""
+        match_node = lst_factory.delete(3)
+        assert match_node.value == 3
+
+    @pytest.mark.lst_factory_data([1, 2, 3])
+    def test_delete_with_3_nodes_tail_matches(self, lst_factory):
+        """List with single matching last node value should return matching Node"""
+        match_node = lst_factory.head.nxt.nxt
+        assert lst_factory.delete(1) == match_node
+
+    @pytest.mark.lst_factory_data([1, 2, 3])
+    def test_delete_with_3_nodes_tail_matches_remaining_nodes(self, lst_factory):
+        """List with single matching last node value should contain that node"""
+        lst_factory.delete(1)
+        assert lst_factory.__str__() == "[3, 2]"
+
+    @pytest.mark.lst_factory_data([1, 2, 3])
+    def test_delete_with_3_nodes_middle_node_matches(self, lst_factory):
+        """List with single matching mid node value should return matching Node"""
+        match_node = lst_factory.head.nxt
+        assert lst_factory.delete(2) == match_node
+
+    @pytest.mark.lst_factory_data([1, 2, 3])
+    def test_delete_with_3_nodes_mid_node_matches_remaining_nodes(self, lst_factory):
+        """List with single matching mid node value should not have that node"""
+        lst_factory.delete(2)
+        assert lst_factory.__str__() == "[3, 1]"
+
 
 class TestSpecialMethodstr:
     def test_str_when_list_empty(self):
