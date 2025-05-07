@@ -18,6 +18,10 @@ class LinkedList:
         lst_content = lst_content.rstrip(", ")
         return lst_content + "]"
 
+    def __repr__(self):
+        # Both __repr__ & __str__ return complete list
+        return self.__str__()
+
     def push(self, value):
         new_node = Node(value)
         if not self.head:
