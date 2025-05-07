@@ -5,8 +5,9 @@ class Node:
 
 
 class LinkedList:
-    def __init__(self) -> None:
+    def __init__(self, length=0) -> None:
         self.head = None
+        self.length = length
 
     def __str__(self):
         # Print the linked list contents
@@ -22,8 +23,13 @@ class LinkedList:
         # Both __repr__ & __str__ return complete list
         return self.__str__()
 
+    def __len__(self):
+        # Custom special len method.
+        return self.length
+
     def push(self, value):
         new_node = Node(value)
+        self.length += 1
         if not self.head:
             self.head = new_node
             return
@@ -38,6 +44,7 @@ class LinkedList:
 
         return_value = self.head.value
         self.head = self.head.nxt
+        self.length -= 1
         return return_value
 
     def is_empty(self):
@@ -53,6 +60,7 @@ class LinkedList:
         return self._append(new_node, current)
 
     def append(self, value):
+        self.length += 1
         new_node = Node(value)
         if not self.head:
             self.head = new_node
@@ -66,6 +74,7 @@ class LinkedList:
         if not self.head.nxt:
             return_value = self.head.value
             self.head = None
+            self.length -= 1
             return return_value
 
         previous = self.head
@@ -74,10 +83,12 @@ class LinkedList:
             previous = current
             current = current.nxt
         previous.nxt = None
+        self.length -= 1
         return current.value
 
     def clear(self):
         self.head = None
+        self.length = 0
         return
 
     def _delete(self, previous, current, value):
@@ -87,6 +98,7 @@ class LinkedList:
         if current.value == value:
             return_node = current
             previous.nxt = current.nxt
+            self.length -= 1
             return return_node
 
         return self._delete(previous.nxt, current.nxt, value)
@@ -98,6 +110,7 @@ class LinkedList:
         if self.head.value == value:
             return_node = self.head
             self.head = self.head.nxt
+            self.length -= 1
             return return_node
 
         return self._delete(self.head, self.head.nxt, value)
