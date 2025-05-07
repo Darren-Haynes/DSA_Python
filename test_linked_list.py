@@ -373,3 +373,105 @@ class TestLinePrintMethod:
         """Test argument per_line"""
         python_lst = [i for i in range(11, 0, -1)]
         assert lst_factory.line_print() == python_lst.__str__()
+
+
+class TestLength:
+    def test_correct_length_on_instantition(self):
+        """When created a new list, length should be = 1."""
+        ll = LinkedList()
+        assert ll.length == 0
+
+    @pytest.mark.parametrize("nodes,exp_len", [(i, i) for i in range(1, 11)])
+    def test_push_10_nodes_creates_correct_lengths(self, nodes, exp_len):
+        """Test list with 1-10 nodes via push method has correct length."""
+        ll = LinkedList()
+        for i in range(1, nodes + 1):
+            ll.push(i)
+        assert ll.length == exp_len
+
+    @pytest.mark.parametrize("nodes,exp_len", [(i, i) for i in range(1, 11)])
+    def test_append_10_nodes_creates_correct_lengths(self, nodes, exp_len):
+        """Test list with 1-10 nodes via append method has correct length."""
+        ll = LinkedList()
+        for i in range(1, nodes + 1):
+            ll.append(i)
+        assert ll.length == exp_len
+
+    @pytest.mark.parametrize("nodes,exp_len", [(i, 10 - i) for i in range(1, 11)])
+    def test_pop_10_nodes_creates_correct_lengths(self, nodes, exp_len):
+        """Test list with 10 nodes popped 1 at a time has correct length."""
+        ll = LinkedList()
+        for i in range(1, 11):
+            ll.push(i)
+        for i in range(1, nodes + 1):
+            ll.pop()
+        assert ll.length == exp_len
+
+    @pytest.mark.parametrize("nodes,exp_len", [(i, 10 - i) for i in range(1, 11)])
+    def test_delete_10_nodes_creates_correct_lengths(self, nodes, exp_len):
+        """Test list with 1-10 nodes deleted has correct length."""
+        ll = LinkedList()
+        for i in range(1, 11):
+            ll.push(i)
+        for i in range(1, nodes + 1):
+            ll.delete(i)
+        assert ll.length == exp_len
+
+    @pytest.mark.parametrize("nodes,exp_len", [(i, 0) for i in range(1, 11)])
+    def test_clear_list_with_1_to_10_nodes(self, nodes, exp_len):
+        """Test list with 1-10 nodes via append method has correct length."""
+        ll = LinkedList()
+        for i in range(1, 11):
+            ll.push(i)
+        ll.clear()
+        assert ll.length == exp_len
+
+    def test_correct_len_on_instantition(self):
+        """When created a new list, len() should be = 1."""
+        ll = LinkedList()
+        assert len(ll) == 0
+
+    @pytest.mark.parametrize("nodes,exp_len", [(i, i) for i in range(1, 11)])
+    def test_push_10_nodes_creates_correct_len(self, nodes, exp_len):
+        """Test list with 1-10 nodes via push method has correct length."""
+        ll = LinkedList()
+        for i in range(1, nodes + 1):
+            ll.push(i)
+        assert len(ll) == exp_len
+
+    @pytest.mark.parametrize("nodes,exp_len", [(i, i) for i in range(1, 11)])
+    def test_append_10_nodes_creates_correct_len(self, nodes, exp_len):
+        """Test list with 1-10 nodes via append method has correct length."""
+        ll = LinkedList()
+        for i in range(1, nodes + 1):
+            ll.append(i)
+        assert len(ll) == exp_len
+
+    @pytest.mark.parametrize("nodes,exp_len", [(i, 10 - i) for i in range(1, 11)])
+    def test_pop_10_nodes_creates_correct_len(self, nodes, exp_len):
+        """Test list with 10 nodes popped 1 at a time has correct length."""
+        ll = LinkedList()
+        for i in range(1, 11):
+            ll.push(i)
+        for i in range(1, nodes + 1):
+            ll.pop()
+        assert len(ll) == exp_len
+
+    @pytest.mark.parametrize("nodes,exp_len", [(i, 10 - i) for i in range(1, 11)])
+    def test_delete_10_nodes_creates_correct_len(self, nodes, exp_len):
+        """Test list with 1-10 nodes deleted has correct length."""
+        ll = LinkedList()
+        for i in range(1, 11):
+            ll.push(i)
+        for i in range(1, nodes + 1):
+            ll.delete(i)
+        assert len(ll) == exp_len
+
+    @pytest.mark.parametrize("nodes,exp_len", [(i, 0) for i in range(1, 11)])
+    def test_clear_list_with_1_to_10_nodes_corrent_len(self, nodes, exp_len):
+        """Test list with 1-10 nodes via append method has correct length."""
+        ll = LinkedList()
+        for i in range(1, 11):
+            ll.push(i)
+        ll.clear()
+        assert len(ll) == exp_len
