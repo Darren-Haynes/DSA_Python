@@ -321,7 +321,7 @@ class TestDeleteMethod:
         assert lst_factory.__str__() == "[3, 1]"
 
 
-class TestSpecialMethodstr:
+class TestSpecialMethodStrAndRepr:
     def test_str_when_list_empty(self):
         """__str__ should return empty list string."""
         ll = LinkedList()
@@ -346,6 +346,15 @@ class TestSpecialMethodstr:
         """__str__ should return list string with 100 items."""
         python_lst = [i for i in range(100, 0, -1)]
         assert lst_factory.__str__() == python_lst.__str__()
+
+    def test_repr_when_list_empty(self):
+        """__str__ should return empty list string."""
+        ll = LinkedList()
+        assert ll.__repr__() == "[]"
+
+    def test_repr_when_one_item_in_list(self, one_node):
+        """__str__ should return list string with single item."""
+        assert one_node.__repr__() == "[1]"
 
 
 class TestLinePrintMethod:
