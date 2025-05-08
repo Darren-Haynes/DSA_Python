@@ -241,21 +241,15 @@ class TestDeleteMethod:
     def test_delete_with_empty_list(self):
         """Empty list should return None."""
         lst = LinkedList()
-        assert not lst.delete(1)
+        assert lst.delete(1) == 0
 
     def test_delete_with_single_node_no_match(self, one_node):
-        """List with single non matching node value should return None"""
-        assert not one_node.delete(2)
+        """List with single non matching node value should return 0"""
+        assert one_node.delete(2) == 0
 
     def test_delete_with_single_node_match(self, one_node):
-        """List with single matching node value should return matching Node"""
-        match_node = one_node.head
-        assert one_node.delete(1) == match_node
-
-    def test_delete_with_single_node_match_returns_value(self, one_node):
-        """List with single matching node value should return node with correct value."""
-        match_node = one_node.delete(1)
-        assert match_node.value == 1
+        """List with single matching node value should return 1"""
+        assert one_node.delete(1) == 1
 
     def test_delete_with_single_node_match_creates_empty_list(self, one_node):
         """List with single matching node value should return node with correct value."""
@@ -264,43 +258,41 @@ class TestDeleteMethod:
 
     @pytest.mark.lst_factory_data([1, 2])
     def test_delete_with_2_nodes_no_match(self, lst_factory):
-        """List with 2 non matching nodes should return none"""
-        assert not lst_factory.delete(3)
+        """List with 2 non matching nodes should return 0"""
+        assert lst_factory.delete(3) == 0
 
     @pytest.mark.lst_factory_data([1, 2])
     def test_delete_with_2_nodes_head_matches(self, lst_factory):
-        """List with single matching node value should return matching Node"""
-        match_node = lst_factory.head
-        assert lst_factory.delete(2) == match_node
+        """List with single matching node value should return 1"""
+        assert lst_factory.delete(2) == 1
 
     @pytest.mark.lst_factory_data([1, 2])
     def test_delete_with_2_nodes_returns_correct_value_of_head(self, lst_factory):
-        """List with single matching node value should return node with correct value."""
-        match_node = lst_factory.delete(2)
-        assert match_node.value == 2
+        """List with single matching node value should have only head node."""
+        lst_factory.delete(2)
+        assert lst_factory.head.value == 1
 
     @pytest.mark.lst_factory_data([1, 2, 3])
     def test_delete_with_3_nodes_no_match(self, lst_factory):
-        """List with 3 non matching nodes should return none"""
-        assert not lst_factory.delete(4)
+        """List with 3 non matching nodes should return 0"""
+        assert lst_factory.delete(4) == 0
 
     @pytest.mark.lst_factory_data([1, 2, 3])
     def test_delete_with_3_nodes_head_matches(self, lst_factory):
-        """List with single matching node value should return matching Node"""
-        match_node = lst_factory.head
-        assert lst_factory.delete(3) == match_node
+        """List with single matching node value should return 1"""
+        assert lst_factory.delete(3) == 1
 
     @pytest.mark.lst_factory_data([1, 2, 3])
-    def test_delete_with_3_nodes_returns_correct_value_of_head(self, lst_factory):
+    def test_delete_head_with_3_nodes_returns_correct_value_of_head(self, lst_factory):
         """List with single matching node value should return node with correct value."""
-        match_node = lst_factory.delete(3)
-        assert match_node.value == 3
+        lst_factory.delete(3)
+        assert lst_factory.head.value == 2
 
     @pytest.mark.lst_factory_data([1, 2, 3])
     def test_delete_with_3_nodes_tail_matches(self, lst_factory):
         """List with single matching last node value should return matching Node"""
-        match_node = lst_factory.head.nxt.nxt
-        assert lst_factory.delete(1) == match_node
+        lst_factory.delete(1)
+        assert lst_factory.head.nxt.value == 2
 
     @pytest.mark.lst_factory_data([1, 2, 3])
     def test_delete_with_3_nodes_tail_matches_remaining_nodes(self, lst_factory):
@@ -309,16 +301,53 @@ class TestDeleteMethod:
         assert lst_factory.__str__() == "[3, 2]"
 
     @pytest.mark.lst_factory_data([1, 2, 3])
-    def test_delete_with_3_nodes_middle_node_matches(self, lst_factory):
-        """List with single matching mid node value should return matching Node"""
-        match_node = lst_factory.head.nxt
-        assert lst_factory.delete(2) == match_node
+    def test_delete_with_3_nodes_middle_node_returns_1(self, lst_factory):
+        """List with single matching mid node value should return 1"""
+        assert lst_factory.delete(2) == 1
 
     @pytest.mark.lst_factory_data([1, 2, 3])
     def test_delete_with_3_nodes_mid_node_matches_remaining_nodes(self, lst_factory):
         """List with single matching mid node value should not have that node"""
         lst_factory.delete(2)
         assert lst_factory.__str__() == "[3, 1]"
+
+    @pytest.mark.lst_factory_data([1, 2, 2])
+    def test_delete_with_3_nodes_delete_head_twice(self, lst_factory):
+        """Deleting head value creates a new head, test new head deletes also"""
+        lst_factory.delete(2, del_num=2)
+        assert lst_factory.__str__() == "[1]"
+
+    @pytest.mark.lst_factory_data([1, 2, 2])
+    def test_delete_with_3_nodes_delete_head_twice_returns_2(self, lst_factory):
+        """Deleting head value twice in 3 node list returns 2."""
+        assert lst_factory.delete(2, del_num=2) == 2
+
+    @pytest.mark.lst_factory_data([2, 2, 2])
+    def test_delete_with_3_nodes_delete_head_thrice_returns_3(self, lst_factory):
+        """Deleting head value thrice in 3 node list returns 2."""
+        assert lst_factory.delete(2, del_num=3) == 3
+
+    @pytest.mark.lst_factory_data([2] * 10)
+    def test_delete_with_10_nodes_delete_head_10_times_returns_10(self, lst_factory):
+        """Deleting head value 10 times using del_all=true param."""
+        assert lst_factory.delete(2, del_all=True) == 10
+
+    @pytest.mark.lst_factory_data([2] * 10)
+    def test_length_with_10_nodes_delete_head_10_times(self, lst_factory):
+        """Deleting head value 10 times using del_all=true param."""
+        lst_factory.delete(2, del_all=True)
+        assert len(lst_factory) == 0
+
+    @pytest.mark.lst_factory_data([2, 1, 2, 1, 2, 1, 2, 1, 2, 1])
+    def test_delete_with_10_nodes_delete_all_even_indexes(self, lst_factory):
+        """Deleting all even index that have value 2 with del_all=true param."""
+        assert lst_factory.delete(2, del_all=True) == 5
+
+    @pytest.mark.lst_factory_data([2, 1, 2, 1, 2, 1, 2, 1, 2, 1])
+    def test_length_with_10_nodes_delete_all_even_indexes(self, lst_factory):
+        """Deleting all even index that have value 2 with del_all=true param."""
+        lst_factory.delete(2, del_all=True)
+        assert len(lst_factory) == 5
 
 
 class TestSpecialMethodStrAndRepr:

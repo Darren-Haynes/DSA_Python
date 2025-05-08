@@ -91,29 +91,44 @@ class LinkedList:
         self.length = 0
         return
 
-    def _delete(self, previous, current, value):
-        if not current:
-            return
-
-        if current.value == value:
-            return_node = current
-            previous.nxt = current.nxt
-            self.length -= 1
-            return return_node
-
-        return self._delete(previous.nxt, current.nxt, value)
-
-    def delete(self, value):
+    def delete(self, value, del_num=1, del_all=False):
+        """
+        Returns how many times the value was deleted from the list.
+        'del_num' argument determines how many times a deletion will occur.
+        'del_num=1' (the default) will delete the first found instance only.
+        'del_all=True' will overide any value of 'del_num'
+        """
         if not self.head:
-            return
+            return 0
 
-        if self.head.value == value:
-            return_node = self.head
+        deleted = 0
+        # First keep checking if head matches
+        while self.head.value == value:
+            print(self.head.value)
             self.head = self.head.nxt
+            deleted += 1
             self.length -= 1
-            return return_node
+            if not self.head:
+                return deleted
+            if not del_all:
+                if deleted == del_num:
+                    return deleted
 
-        return self._delete(self.head, self.head.nxt, value)
+        # Once head stops matching, continue through list
+        current = self.head.nxt
+        previous = self.head
+        while current:
+            if current.value == value:
+                previous.nxt = current.nxt
+                deleted += 1
+                self.length -= 1
+                if not del_all:
+                    if deleted == del_num:
+                        return deleted
+            current = current.nxt
+            previous = previous.nxt
+
+        return deleted
 
     def line_print(self, per_line=10):
         if not self.head:
