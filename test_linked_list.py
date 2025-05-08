@@ -349,6 +349,27 @@ class TestDeleteMethod:
         lst_factory.delete(2, del_all=True)
         assert len(lst_factory) == 5
 
+    @pytest.mark.lst_factory_data([2, 1, 1, 1, 1, 1, 1, 1, 1, 1])
+    def test_delete_with_10_nodes_delete_all_nodes_but_head(self, lst_factory):
+        """Deleting all even index that have value 2 with del_all=true param."""
+        lst_factory.delete(1, del_num=9)
+        assert lst_factory.__str__() == "[2]"
+
+    def test_non_int_passed_as_param(self):
+        """Delete should return 0 if 'del_num' param is not int."""
+        ll = LinkedList()
+        assert ll.delete(1, del_num=1.1) == 0
+
+    def test_int_less_than_1_param(self):
+        """Delete should return 0 if 'del_num' is less than 1."""
+        ll = LinkedList()
+        assert ll.delete(1, del_num=0) == 0
+
+    def test_non_bool_passed_as_param(self):
+        """Delete should return 0 if 'del_all' param is not bool."""
+        ll = LinkedList()
+        assert ll.delete(1, del_all=1) == 0
+
 
 class TestSpecialMethodStrAndRepr:
     def test_str_when_list_empty(self):

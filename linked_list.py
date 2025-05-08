@@ -98,6 +98,18 @@ class LinkedList:
         'del_num=1' (the default) will delete the first found instance only.
         'del_all=True' will overide any value of 'del_num'
         """
+        if type(del_num) is not int:
+            print("'del_num' param must be an int")
+            return 0
+
+        if type(del_all) is not bool:
+            print("'del_all' param must be a bool")
+            return 0
+
+        if del_num < 1:
+            print("'del_num=' parameter must be an int greater than 0")
+            return 0
+
         if not self.head:
             return 0
 
