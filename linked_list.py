@@ -56,21 +56,18 @@ class LinkedList:
             return True
         return False
 
-    def _append(self, new_node, current):
-        if not current.nxt:
-            current.nxt = new_node
-            return new_node
-        current = current.nxt
-        return self._append(new_node, current)
-
     def append(self, value):
         self.length += 1
         new_node = Node(value)
         if not self.head:
             self.head = new_node
-            return new_node
+            self.tail = new_node
+            return new_node.value
 
-        return self._append(new_node, self.head)
+        self.tail.nxt = new_node
+        self.tail = new_node
+
+        return new_node.value
 
     def pop_right(self):
         if not self.head:

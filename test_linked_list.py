@@ -12,7 +12,25 @@ def one_node():
 
 
 @pytest.fixture
+def one_node_appended():
+    lst = LinkedList()
+    lst.append(1)
+    return lst
+
+
+@pytest.fixture
 def lst_factory(request):
+    marker = request.node.get_closest_marker("lst_factory_data")
+
+    # Do something with the data
+    lst = LinkedList()
+    for value in marker.args[0]:
+        lst.push(value)
+    return lst
+
+
+@pytest.fixture
+def lst_factory_append(request):
     marker = request.node.get_closest_marker("lst_factory_data")
 
     # Do something with the data
@@ -567,3 +585,40 @@ class TestTailWithPushAndPop:
         """Pop 1 node from 3 node list, head.nxt should nbe tail."""
         lst_factory.pop()
         assert lst_factory.tail == lst_factory.head.nxt
+
+
+class TestTailWithAppendAndPop:
+    def test_append_one_node_is_tail(self, one_node_appended):
+        """A list with a single appended node, that node should be the tail."""
+        assert one_node_appended.tail.value == 1
+
+    def test_append_one_node_is_tail_and_head(self, one_node_appended):
+        """A list with a single appended node, node should be head and tail."""
+        assert one_node_appended.tail == one_node_appended.head
+
+    @pytest.mark.lst_factory_data([1, 2])
+    def test_append_2_nodes_has_right_tail_value(self, lst_factory_append):
+        """A list with two nodes appended, last node should be tail."""
+        assert lst_factory_append.tail.value == 1
+
+    @pytest.mark.lst_factory_data([1, 2, 3])
+    def test_append_3_nodes_has_right_tail_value(self, lst_factory_append):
+        """A list with 3 nodes, last node should be tail."""
+        assert lst_factory_append.tail.value == 1
+
+    def test_pop_lst_with_single_node_has_no_tail(self, one_node_appended):
+        """If popping only node in list then tail should be None."""
+        one_node_appended.pop()
+        assert not one_node_appended.tail
+
+    @pytest.mark.lst_factory_data([1, 2])
+    def test_2_nodes_pop_one_node_has_right_tail(self, lst_factory_append):
+        """Pop 1 node from 2 node list, head and tail should be same node."""
+        lst_factory_append.pop()
+        assert lst_factory_append.tail == lst_factory_append.head
+
+    @pytest.mark.lst_factory_data([1, 2, 3])
+    def test_3_nodes_pop_one_node_has_right_tail(self, lst_factory_append):
+        """Pop 1 node from 3 node list, head.nxt should nbe tail."""
+        lst_factory_append.pop()
+        assert lst_factory_append.tail == lst_factory_append.head.nxt
