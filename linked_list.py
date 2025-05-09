@@ -7,6 +7,7 @@ class Node:
 class LinkedList:
     def __init__(self, length=0) -> None:
         self.head = None
+        self.tail = None
         self.length = length
 
     def __str__(self):
@@ -32,6 +33,7 @@ class LinkedList:
         self.length += 1
         if not self.head:
             self.head = new_node
+            self.tail = new_node
             return
 
         new_node.nxt = self.head
@@ -44,6 +46,8 @@ class LinkedList:
 
         return_value = self.head.value
         self.head = self.head.nxt
+        if not self.head:
+            self.tail = None
         self.length -= 1
         return return_value
 
