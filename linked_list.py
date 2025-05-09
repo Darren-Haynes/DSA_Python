@@ -75,6 +75,7 @@ class LinkedList:
         if not self.head.nxt:
             return_value = self.head.value
             self.head = None
+            self.tail = None
             self.length -= 1
             return return_value
 
@@ -84,6 +85,7 @@ class LinkedList:
             previous = current
             current = current.nxt
         previous.nxt = None
+        self.tail = previous
         self.length -= 1
         return current.value
 
