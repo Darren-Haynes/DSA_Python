@@ -525,3 +525,45 @@ class TestLength:
             ll.push(i)
         ll.clear()
         assert len(ll) == exp_len
+
+
+class TestTailWithPushAndPop:
+    def test_empty_list_has_no_tail(self):
+        """An freshly coined linked list should be empty and with a tail."""
+        lst = LinkedList()
+        assert not lst.tail
+
+    def test_push_one_node_is_tail(self, one_node):
+        """A list with a single pushed node, that node should be the tail."""
+        assert one_node.tail.value == 1
+
+    def test_push_one_node_is_tail_and_head(self, one_node):
+        """A list with a single pushed node, node should be head and tail."""
+        assert one_node.tail == one_node.head
+
+    @pytest.mark.lst_factory_data([1, 2])
+    def test_push_2_nodes_has_right_tail_value(self, lst_factory):
+        """A list with two nodes, last node should be tail."""
+        assert lst_factory.tail.value == 1
+
+    @pytest.mark.lst_factory_data([1, 2, 3])
+    def test_push_3_nodes_has_right_tail_value(self, lst_factory):
+        """A list with 3 nodes, last node should be tail."""
+        assert lst_factory.tail.value == 1
+
+    def test_pop_lst_with_single_node_has_no_tail(self, one_node):
+        """If popping only node in list then tail should be None."""
+        one_node.pop()
+        assert not one_node.tail
+
+    @pytest.mark.lst_factory_data([1, 2])
+    def test_2_nodes_pop_one_node_has_right_tail(self, lst_factory):
+        """Pop 1 node from 2 node list, head and tail should be same node."""
+        lst_factory.pop()
+        assert lst_factory.tail == lst_factory.head
+
+    @pytest.mark.lst_factory_data([1, 2, 3])
+    def test_3_nodes_pop_one_node_has_right_tail(self, lst_factory):
+        """Pop 1 node from 3 node list, head.nxt should nbe tail."""
+        lst_factory.pop()
+        assert lst_factory.tail == lst_factory.head.nxt
