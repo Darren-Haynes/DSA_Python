@@ -1,17 +1,39 @@
+"""
+    Linked List.
+"""
+
 class Node:
+    """
+    Nodes to be used within a linked list.
+    value: node must be instantiated with a value (data)
+    nxt: instantiated as None.
+    """
     def __init__(self, value, nxt=None) -> None:
         self.value = value
         self.nxt = nxt
 
 
 class LinkedList:
+    """
+    A LINKED LIST.
+    In addition to the standard push and pop methods that we associate with a
+    LinkedList 'append' and 'pop_right' methods are implemented to access the
+    other end of the list. Note that even though we have direct access to the
+    end of the list, there are no backwards pointers i.e you can only iterate
+    from head to tail. Thus this is not a doubly linked list.
+    """
     def __init__(self, length=0) -> None:
+        """
+        List instantiates with head and tail of 'None and length of 0"
+        """
         self.head = None
         self.tail = None
         self.length = length
 
     def __str__(self):
-        # Print the linked list contents
+        """
+        Print the vaules of all the nodes in the list.
+        """
         lst_content = "["
         current = self.head
         while current:
@@ -21,14 +43,23 @@ class LinkedList:
         return lst_content + "]"
 
     def __repr__(self):
-        # Both __repr__ & __str__ return complete list
+        """
+        Print the vaules of all the nodes in the list.
+        """
         return self.__str__()
 
     def __len__(self):
         # Custom special len method.
+        """
+        Returns the number of nodes in the list.
+        """
         return self.length
 
     def push(self, value):
+        """
+        A new node to the head of the list.
+        value: must be passed and can be any data type.
+        """
         new_node = Node(value)
         self.length += 1
         if not self.head:
@@ -41,6 +72,10 @@ class LinkedList:
         return
 
     def pop(self):
+        """
+        Pops the head node and returns it's value.
+        Takes no parameters.
+        """
         if not self.head:
             return
 
@@ -52,11 +87,18 @@ class LinkedList:
         return return_value
 
     def is_empty(self):
+        """
+        Check if the list has nodes.
+        """
         if not self.head:
             return True
         return False
 
     def append(self, value):
+        """
+        Add a node to the end of the list.
+        value: must be supplied and supports any data type.
+        """
         self.length += 1
         new_node = Node(value)
         if not self.head:
@@ -70,6 +112,10 @@ class LinkedList:
         return new_node.value
 
     def pop_right(self):
+        """
+        Pop the node at the tail end of the list.
+        Takes no parameters.
+        """
         if not self.head:
             return
         if not self.head.nxt:
@@ -90,6 +136,10 @@ class LinkedList:
         return current.value
 
     def clear(self):
+        """
+        Removes all nodes from the list.
+        Resets 'head' and 'tail' to None and length to 0.
+        """
         self.head = None
         self.length = 0
         self.tail = 0
@@ -98,7 +148,7 @@ class LinkedList:
     def delete(self, value, del_num=1, del_all=False):
         """
         Returns how many times the value was deleted from the list.
-        'del_num' argument determines how many times a deletion will occur.
+        'del_num' parameter determines how many times a deletion will occur.
         'del_num=1' (the default) will delete the first found instance only.
         'del_all=True' will overide any value of 'del_num'
         """
@@ -150,6 +200,11 @@ class LinkedList:
         return deleted
 
     def line_print(self, per_line=10):
+        """
+        Prints the contents of the list.
+        Values of 10 nodes printed per line by default.
+        'per_line' parameter can be change to overide default.
+        """
         if not self.head:
             print("[]")
             return "[]"
