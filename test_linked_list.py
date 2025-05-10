@@ -246,8 +246,13 @@ class TestClearMethod:
         assert not lst.clear()
 
     def test_clear_method_with_single_node(self, one_node):
-        """Already empty list returns none."""
+        """Clear list with single node has not nodes."""
         assert not one_node.clear()
+
+    def test_clear_list_with_node_has_no_tail(self, one_node):
+        """Clearing list should change tail to None."""
+        one_node.clear()
+        assert not one_node.tail
 
     @pytest.mark.lst_factory_data([i for i in range(1, 11)])
     def test_clear_method_with_ten_nodes(self, lst_factory):
@@ -641,3 +646,34 @@ class TestTailWithAppendAndPopRight:
         """Pop_right 1 node from 3 node list, head.nxt should nbe tail."""
         lst_factory_append.pop_right()
         assert lst_factory_append.tail == lst_factory_append.head.nxt
+
+
+class TestTailWithDeleteMethod:
+    def test_delete_with_single_node_match(self, one_node):
+        """List with single node deleted should have no tail"""
+        one_node.delete(1)
+        assert not one_node.tail
+
+    @pytest.mark.lst_factory_data([1, 2])
+    def test_2_node_list_delete_head_node_has_correct_tail(self, lst_factory):
+        """List with single matching node value should have correct tail."""
+        lst_factory.delete(2)
+        assert lst_factory.tail.value == 1
+
+    @pytest.mark.lst_factory_data([1, 2])
+    def test_2_node_list_delete_current_tail_has_correct_new_tail(self, lst_factory):
+        """List with single matching node value should have correct tail."""
+        lst_factory.delete(1)
+        assert lst_factory.tail.value == 2
+
+    @pytest.mark.lst_factory_data([1, 2, 3])
+    def test_delete_with_3_nodes_delete_tail_new_tail_value(self, lst_factory):
+        """List with 3 nodes, delete last node, tail becomes previous node."""
+        lst_factory.delete(1)
+        assert lst_factory.tail.value == 2
+
+    @pytest.mark.lst_factory_data([1, 2, 3])
+    def test_delete_with_3_nodes_delete_middle_node(self, lst_factory):
+        """List with 3 nodes, delete mid node, tail doesn't change."""
+        lst_factory.delete(2)
+        assert lst_factory.tail.value == 1

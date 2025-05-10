@@ -92,6 +92,7 @@ class LinkedList:
     def clear(self):
         self.head = None
         self.length = 0
+        self.tail = 0
         return
 
     def delete(self, value, del_num=1, del_all=False):
@@ -124,6 +125,7 @@ class LinkedList:
             deleted += 1
             self.length -= 1
             if not self.head:
+                self.tail = None
                 return deleted
             if not del_all:
                 if deleted == del_num:
@@ -134,6 +136,8 @@ class LinkedList:
         previous = self.head
         while current:
             if current.value == value:
+                if self.tail == current:
+                    self.tail = previous
                 previous.nxt = current.nxt
                 deleted += 1
                 self.length -= 1
