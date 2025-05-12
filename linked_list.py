@@ -227,3 +227,19 @@ class LinkedList:
         print(print_string)
         print("]\n")
         return self.__str__()
+
+    def _average(self, current):
+        if not current:
+            return 0
+        return self._average(current.nxt) + current.value
+
+    def average(self):
+        """
+        Returns the average of all the values in the list.
+        """
+        if not self.head:
+            return 0
+        total =  self._average(self.head)
+        if total:
+            return total / self.length
+        return total

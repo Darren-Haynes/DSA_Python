@@ -677,3 +677,34 @@ class TestTailWithDeleteMethod:
         """List with 3 nodes, delete mid node, tail doesn't change."""
         lst_factory.delete(2)
         assert lst_factory.tail.value == 1
+
+class TestAverageMethod:
+    def test_empty_list_returns_zero(self):
+        """An empty list should return an average of 0."""
+        lst = LinkedList()
+        assert lst.average() == 0
+
+    def test_list_with_single_node_with_value_0(self):
+        """If single node with value 0, 0 should be returned."""
+        lst = LinkedList()
+        lst.push(0)
+        assert lst.average() == 0
+
+    @pytest.mark.lst_factory_data([0, 0])
+    def test_list_with_2_nodes_both_with_values_0(self, lst_factory):
+        """If list has 2 nodes, eachwith value 0, 0 should be returned."""
+        lst_factory = LinkedList()
+        assert lst_factory.average() == 0
+
+    @pytest.mark.parametrize("value,avg", [(i, i) for i in range(1, 11)])
+    def test_list_with_single_node_with_value(self, value, avg):
+        """If single node with value > 0, that number should be returned."""
+        lst = LinkedList()
+        lst.push(value)
+        assert lst.average() == avg
+
+    @pytest.mark.lst_factory_data([i for i in range(1, 11)])
+    def test_list_with_10_nodes_with_unque_values(self, lst_factory):
+        """10 nodes with values 1..10 should return an average of 5.5"""
+        assert lst_factory.average() == 5.5
+
