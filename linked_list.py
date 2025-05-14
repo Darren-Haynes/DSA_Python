@@ -1,6 +1,7 @@
 """
-    Linked List.
+Linked List.
 """
+
 
 class Node:
     """
@@ -8,6 +9,7 @@ class Node:
     value: node must be instantiated with a value (data)
     nxt: instantiated as None.
     """
+
     def __init__(self, value, nxt=None) -> None:
         self.value = value
         self.nxt = nxt
@@ -22,13 +24,16 @@ class LinkedList:
     end of the list, there are no backwards pointers i.e you can only iterate
     from head to tail. Thus this is not a doubly linked list.
     """
-    def __init__(self, length=0) -> None:
+
+    def __init__(self, length=0, strict=False) -> None:
         """
         List instantiates with head and tail of 'None and length of 0"
         """
         self.head = None
         self.tail = None
         self.length = length
+        self.__strict = strict
+        self.__type = None
 
     def __str__(self):
         """
@@ -60,13 +65,22 @@ class LinkedList:
         A new node to the head of the list.
         value: must be passed and can be any data type.
         """
-        new_node = Node(value)
-        self.length += 1
+
         if not self.head:
-            self.head = new_node
-            self.tail = new_node
+            self.length += 1
+            self.__type = type(value)
+            first_node = Node(value)
+            self.head = first_node
+            self.tail = first_node
             return
 
+        if self.__strict:
+            if type(value) is not self.__type:
+                print("Strict list cannot contain multiple types.")
+                return False
+
+        self.length += 1
+        new_node = Node(value)
         new_node.nxt = self.head
         self.head = new_node
         return
@@ -99,16 +113,23 @@ class LinkedList:
         Add a node to the end of the list.
         value: must be supplied and supports any data type.
         """
-        self.length += 1
-        new_node = Node(value)
         if not self.head:
-            self.head = new_node
-            self.tail = new_node
-            return new_node.value
+            self.__type = type(value)
+            first_node = Node(value)
+            self.head = first_node
+            self.tail = first_node
+            self.length += 1
+            return first_node.value
 
+        if self.__strict:
+            if type(value) is not self.__type:
+                print("Strict list cannot contain multiple types.")
+                return False
+
+        new_node = Node(value)
         self.tail.nxt = new_node
         self.tail = new_node
-
+        self.length += 1
         return new_node.value
 
     def pop_right(self):
@@ -239,7 +260,7 @@ class LinkedList:
         """
         if not self.head:
             return 0
-        total =  self._average(self.head)
+        total = self._average(self.head)
         if total:
             return total / self.length
         return total

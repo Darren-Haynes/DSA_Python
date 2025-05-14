@@ -78,6 +78,81 @@ class TestLinkedListClassHead:
         lst = LinkedList()
         assert not lst.head
 
+    def test_LinkedList_initiates_with_tail_as_None(self):
+        """A LinkedList initializes with the .tail attribute."""
+        lst = LinkedList()
+        assert not lst.tail
+
+    def test_LinkedList_initiates_with_length_0(self):
+        """A LinkedList initializes with the .length attribute."""
+        lst = LinkedList()
+        assert lst.length == 0
+
+    def test_LinkedList_initiates_with_type_None(self):
+        """A LinkedList initializes with type as None."""
+        lst = LinkedList()
+        assert not lst._LinkedList__type
+
+    def test_LinkedList_initiates_with_strict_False_as_default(self):
+        """A LinkedList initializes with __stict as False."""
+        lst = LinkedList()
+        assert not lst._LinkedList__strict
+
+    def test_LinkedList_initiates_with_strict_True(self):
+        """A LinkedList initializes with __stict as True passed as kw arg."""
+        lst = LinkedList(strict=True)
+        assert lst._LinkedList__strict
+
+
+class TestTypeChecking:
+    params = [(1, int), (1.1, float), (1j, complex), ("1", str)]
+
+    @pytest.mark.parametrize("value,exp_type", params)
+    def test_push_first_node_has_correct___type_attribute(self, value, exp_type):
+        lst = LinkedList()
+        lst.push(value)
+        assert lst._LinkedList__type == exp_type
+
+    params2 = [(1, 1.1), (1.1, 1), (1j, 1), ("1", 1)]
+
+    @pytest.mark.parametrize("node1,node2", params2)
+    def test_2nd_node_of_diff_type_returns_False(self, node1, node2):
+        """Test 2nd node pushed with non-matching value when strict."""
+        lst = LinkedList(strict=True)
+        lst.push(node1)
+        assert not lst.push(node2)
+
+    @pytest.mark.parametrize("node1,node2", params2)
+    def test_2nd_node_of_diff_type_allowed_when_not_strict(self, node1, node2):
+        """Test 2nd node pushed with non-matching value when strict."""
+        lst = LinkedList()
+        lst.push(node1)
+        lst.push(node2)
+        assert lst.head.value == node2
+
+    @pytest.mark.parametrize("value,exp_type", params)
+    def test_append_first_node_has_correct___type_attribute(self, value, exp_type):
+        lst = LinkedList()
+        lst.append(value)
+        assert lst._LinkedList__type == exp_type
+
+    params2 = [(1, 1.1), (1.1, 1), (1j, 1), ("1", 1)]
+
+    @pytest.mark.parametrize("node1,node2", params2)
+    def test_2nd_node_of_diff_type_appended_returns_False(self, node1, node2):
+        """Test 2nd node pushed with non-matching value when strict."""
+        lst = LinkedList(strict=True)
+        lst.append(node1)
+        assert not lst.append(node2)
+
+    @pytest.mark.parametrize("node1,node2", params2)
+    def test_2nd_node_append_of_diff_type_allowed_when_not_strict(self, node1, node2):
+        """Test 2nd node pushed with non-matching value when strict."""
+        lst = LinkedList()
+        lst.append(node1)
+        lst.append(node2)
+        assert lst.head.value == node1
+
 
 class TestPushMethod:
     def test_LinkedList_with_1_node_is_head(self, one_node):
@@ -678,6 +753,7 @@ class TestTailWithDeleteMethod:
         lst_factory.delete(2)
         assert lst_factory.tail.value == 1
 
+
 class TestAverageMethod:
     def test_empty_list_returns_zero(self):
         """An empty list should return an average of 0."""
@@ -707,4 +783,3 @@ class TestAverageMethod:
     def test_list_with_10_nodes_with_unque_values(self, lst_factory):
         """10 nodes with values 1..10 should return an average of 5.5"""
         assert lst_factory.average() == 5.5
-
