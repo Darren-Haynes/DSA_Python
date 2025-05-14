@@ -172,6 +172,24 @@ class LinkedList:
             return
         return self.tail.value
 
+    def _find(self, value, current):
+        if not current:
+            return False
+
+        if current.value == value:
+            return True
+
+        return self._find(value, current.nxt)
+
+    def find(self, value):
+        """
+        See if a value exits in the list.
+        """
+        if not self.head:
+            return False
+
+        return self._find(value, self.head)
+
     def clear(self):
         """
         Removes all nodes from the list.
