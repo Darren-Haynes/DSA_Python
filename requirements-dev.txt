@@ -1,0 +1,7 @@
+coverage==7.8.0
+debugpy==1.8.14
+ipython==9.2.0
+pytest==8.3.5
+pytest-cov==6.1.1
+tox==4.26.0
+virtualenv==20.31.2
