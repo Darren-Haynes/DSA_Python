@@ -783,3 +783,27 @@ class TestAverageMethod:
     def test_list_with_10_nodes_with_unque_values(self, lst_factory):
         """10 nodes with values 1..10 should return an average of 5.5"""
         assert lst_factory.average() == 5.5
+
+
+class TestPeekMethods:
+    def test_peek_with_empty_list(self):
+        """Empty list returns None when you peek."""
+        lst = LinkedList()
+        assert not lst.peek()
+
+    def test_peek_with_with_single_node(self, one_node):
+        """List with single node should peek that node's value"""
+        assert one_node.peek() == 1
+
+    def test_peek_right_with_with_single_node(self, one_node):
+        """List with single node should peek_right that node's value"""
+        assert one_node.peek_right() == 1
+
+    def test_peek_right_with_empty_list(self):
+        """Empty list returns None when you peek."""
+        lst = LinkedList()
+        assert not lst.peek_right()
+
+    def test_peek_right_with_with_2_nodes(self, one_node):
+        """List with 2 nodes should peek_right that node's value"""
+        assert one_node.peek_right() == 1

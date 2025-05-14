@@ -156,6 +156,22 @@ class LinkedList:
         self.length -= 1
         return current.value
 
+    def peek(self):
+        """
+        Take a peek at the value of the head node without popping it.
+        """
+        if not self.head:
+            return
+        return self.head.value
+
+    def peek_right(self):
+        """
+        Take a peek at the value of the tail node without popping it.
+        """
+        if not self.head:
+            return
+        return self.tail.value
+
     def clear(self):
         """
         Removes all nodes from the list.
