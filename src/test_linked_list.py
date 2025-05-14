@@ -807,3 +807,29 @@ class TestPeekMethods:
     def test_peek_right_with_with_2_nodes(self, one_node):
         """List with 2 nodes should peek_right that node's value"""
         assert one_node.peek_right() == 1
+
+
+class TestFind:
+    def test_find_with_empty_list(self):
+        """Find on an empty list returns none."""
+        lst = LinkedList()
+        assert not lst.find(1)
+
+    def test_find_value_single_node_match(self, one_node):
+        """Find should return True if node matches in one node list."""
+        assert one_node.find(1)
+
+    def test_find_value_single_node_no_match(self, one_node):
+        """Find should return False if node doesn't match in one node list."""
+        assert not one_node.find(2)
+
+    @pytest.mark.parametrize("value, result", [(i, True) for i in range(1, 10)])
+    @pytest.mark.lst_factory_data([i for i in range(1, 11)])
+    def test_list_10_nodes_with_unque_values(self, lst_factory, value, result):
+        """List with 10 nodes, every node a match"""
+        assert lst_factory.find(value) == result
+
+    @pytest.mark.lst_factory_data([i for i in range(1, 11)])
+    def test_list_10_nodes_no_matches(self, lst_factory):
+        """List with 10 nodes, find value doesn't match"""
+        assert not lst_factory.find(11)
