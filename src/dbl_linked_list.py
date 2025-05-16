@@ -40,3 +40,27 @@ class DblList(LinkedList):
         new_node.nxt = self.head
         self.head.prev = new_node
         self.head = new_node
+
+    def append(self, value):
+        """
+        Add a node to the end of the list.
+        value: must be supplied and supports any data type.
+        """
+        if not self.head:
+            self.__type = type(value)
+            first_node = DblNode(value)
+            self.head = first_node
+            self.tail = first_node
+            self.length += 1
+            return first_node.value
+
+        if self.__strict:
+            if type(value) is not self.__type:
+                print("Strict list cannot contain multiple types.")
+                return False
+
+        new_node = DblNode(value)
+        self.tail.nxt = new_node
+        new_node.prev = self.tail
+        self.tail = new_node
+        self.length += 1
