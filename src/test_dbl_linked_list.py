@@ -240,3 +240,65 @@ class TestAppendMethod:
         lst.append(2)
         lst.append(3)
         assert lst.tail.prev.value == 2
+
+
+class TestPopRightMethod:
+    def test_pop_right_empty_list(self):
+        """Empty list should return None."""
+        lst = DblList()
+        assert not lst.pop_right()
+
+    def test_pop_right_with_one_node_return_value(self, dbl_one_node):
+        """A list with single node should return nodes value"""
+        assert dbl_one_node.pop_right() == 1
+
+    def test_pop_right_with_one_node_creates_empty_list(self, dbl_one_node):
+        """A list with sinlge node that gets popped should be empty."""
+        dbl_one_node.pop_right()
+        assert not dbl_one_node.head
+
+    def test_pop_right_with_one_node_has_empty_tail(self, dbl_one_node):
+        """A list with sinlge node that gets popped should be empty."""
+        dbl_one_node.pop_right()
+        assert not dbl_one_node.tail
+
+    @pytest.mark.dbl_lst_factory_data([1, 2])
+    def test_pop_right_with_2_nodes_returns_correct_value(self, dbl_lst_factory):
+        """Right pop list with 2 nodes, first node pushed value should return."""
+        assert dbl_lst_factory.pop_right() == 1
+
+    @pytest.mark.dbl_lst_factory_data([1, 2])
+    def test_pop_right_with_2_nodes_has_correct_tail(self, dbl_lst_factory):
+        """Right pop list with 2 nodes, tail is right value."""
+        dbl_lst_factory.pop_right()
+        assert dbl_lst_factory.tail.value == 2
+
+    @pytest.mark.dbl_lst_factory_data([1, 2])
+    def test_pop_right_with_2_nodes_tail_head_same(self, dbl_lst_factory):
+        """Right pop list with 2 nodes, tail and head same node."""
+        dbl_lst_factory.pop_right()
+        assert dbl_lst_factory.tail is dbl_lst_factory.head
+
+    @pytest.mark.dbl_lst_factory_data([1, 2, 3])
+    def test_pop_right_with_three_nodes_returns_correct_value(self, dbl_lst_factory):
+        """Right pop list with 3 nodes, first node pushed value should return."""
+        assert dbl_lst_factory.pop_right() == 1
+
+    @pytest.mark.dbl_lst_factory_data([1, 2, 3])
+    def test_pop_right_with_three_nodes_tail_is_correct(self, dbl_lst_factory):
+        """Right pop list with 3 nodes, tail has correct value."""
+        dbl_lst_factory.pop_right()
+        assert dbl_lst_factory.tail.value == 2
+
+    @pytest.mark.dbl_lst_factory_data([1, 2])
+    def test_head_nxt_after_pop_list_with_2_nodes(self, dbl_lst_factory):
+        """Pop list with 2 nodes, head's nxt should be None."""
+        dbl_lst_factory.pop()
+        assert not dbl_lst_factory.head.nxt
+
+    @pytest.mark.dbl_lst_factory_data([1, 2])
+    def test_list_is_empty_after_popping_twice(self, dbl_lst_factory):
+        """Pop twice list with 2 nodes, head should be None."""
+        dbl_lst_factory.pop()
+        dbl_lst_factory.pop()
+        assert not dbl_lst_factory.head
