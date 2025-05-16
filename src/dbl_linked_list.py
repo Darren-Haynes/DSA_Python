@@ -64,3 +64,23 @@ class DblList(LinkedList):
         new_node.prev = self.tail
         self.tail = new_node
         self.length += 1
+
+    def pop_right(self):
+        """
+        Pop the node at the tail end of the list.
+        Takes no parameters.
+        """
+        if not self.tail:
+            return
+
+        return_value = self.tail.value
+
+        if not self.tail.prev:
+            self.tail = None
+            self.head = None
+            self.length -= 1
+            return return_value
+
+        self.tail = self.tail.prev
+        self.tail.nxt = None
+        return return_value
