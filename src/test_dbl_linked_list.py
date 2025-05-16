@@ -352,3 +352,143 @@ class TestTypeChecking:
         lst.append(node1)
         lst.append(node2)
         assert lst.head.value == node1
+
+
+class TestDeleteMethod:
+    def test_delete_with_empty_list(self):
+        """Empty list should return None."""
+        lst = DblList()
+        assert lst.delete(1) == 0
+
+    def test_delete_with_single_node_no_match(self, dbl_one_node):
+        """List with single non matching node value should return 0"""
+        assert dbl_one_node.delete(2) == 0
+
+    def test_delete_with_single_node_match(self, dbl_one_node):
+        """List with single matching node value should return 1"""
+        assert dbl_one_node.delete(1) == 1
+
+    def test_delete_with_single_node_match_creates_empty_list(self, dbl_one_node):
+        """List with single matching node value should return node with correct value."""
+        dbl_one_node.delete(1)
+        assert not dbl_one_node.head
+
+    @pytest.mark.dbl_lst_factory_data([1, 2])
+    def test_delete_with_2_nodes_no_match(self, dbl_lst_factory):
+        """List with 2 non matching nodes should return 0"""
+        assert dbl_lst_factory.delete(3) == 0
+
+    @pytest.mark.dbl_lst_factory_data([1, 2])
+    def test_delete_with_2_nodes_head_matches(self, dbl_lst_factory):
+        """List with single matching node value should return 1"""
+        assert dbl_lst_factory.delete(2) == 1
+
+    @pytest.mark.dbl_lst_factory_data([1, 2])
+    def test_delete_with_2_nodes_returns_correct_value_of_head(self, dbl_lst_factory):
+        """List with single matching node value should have only head node."""
+        dbl_lst_factory.delete(2)
+        assert dbl_lst_factory.head.value == 1
+
+    @pytest.mark.dbl_lst_factory_data([1, 2, 3])
+    def test_delete_with_3_nodes_no_match(self, dbl_lst_factory):
+        """List with 3 non matching nodes should return 0"""
+        assert dbl_lst_factory.delete(4) == 0
+
+    @pytest.mark.dbl_lst_factory_data([1, 2, 3])
+    def test_delete_with_3_nodes_head_matches(self, dbl_lst_factory):
+        """List with single matching node value should return 1"""
+        assert dbl_lst_factory.delete(3) == 1
+
+    @pytest.mark.dbl_lst_factory_data([1, 2, 3])
+    def test_delete_head_with_3_nodes_returns_correct_value_of_head(
+        self, dbl_lst_factory
+    ):
+        """List with single matching node value should return node with correct value."""
+        dbl_lst_factory.delete(3)
+        assert dbl_lst_factory.head.value == 2
+
+    @pytest.mark.dbl_lst_factory_data([1, 2, 3])
+    def test_delete_with_3_nodes_tail_matches(self, dbl_lst_factory):
+        """List with single matching last node value should return matching Node"""
+        dbl_lst_factory.delete(1)
+        assert dbl_lst_factory.head.nxt.value == 2
+
+    @pytest.mark.dbl_lst_factory_data([1, 2, 3])
+    def test_delete_with_3_nodes_tail_matches_remaining_nodes(self, dbl_lst_factory):
+        """List with single matching last node value should contain that node"""
+        dbl_lst_factory.delete(1)
+        assert dbl_lst_factory.__str__() == "[3, 2]"
+
+    @pytest.mark.dbl_lst_factory_data([1, 2, 3])
+    def test_delete_with_3_nodes_middle_node_returns_1(self, dbl_lst_factory):
+        """List with single matching mid node value should return 1"""
+        assert dbl_lst_factory.delete(2) == 1
+
+    @pytest.mark.dbl_lst_factory_data([1, 2, 3])
+    def test_delete_with_3_nodes_mid_node_matches_remaining_nodes(
+        self, dbl_lst_factory
+    ):
+        """List with single matching mid node value should not have that node"""
+        dbl_lst_factory.delete(2)
+        assert dbl_lst_factory.__str__() == "[3, 1]"
+
+    @pytest.mark.dbl_lst_factory_data([1, 2, 2])
+    def test_delete_with_3_nodes_delete_head_twice(self, dbl_lst_factory):
+        """Deleting head value creates a new head, test new head deletes also"""
+        dbl_lst_factory.delete(2, del_num=2)
+        assert dbl_lst_factory.__str__() == "[1]"
+
+    @pytest.mark.dbl_lst_factory_data([1, 2, 2])
+    def test_delete_with_3_nodes_delete_head_twice_returns_2(self, dbl_lst_factory):
+        """Deleting head value twice in 3 node list returns 2."""
+        assert dbl_lst_factory.delete(2, del_num=2) == 2
+
+    @pytest.mark.dbl_lst_factory_data([2, 2, 2])
+    def test_delete_with_3_nodes_delete_head_thrice_returns_3(self, dbl_lst_factory):
+        """Deleting head value thrice in 3 node list returns 2."""
+        assert dbl_lst_factory.delete(2, del_num=3) == 3
+
+    @pytest.mark.dbl_lst_factory_data([2] * 10)
+    def test_delete_with_10_nodes_delete_head_10_times_returns_10(
+        self, dbl_lst_factory
+    ):
+        """Deleting head value 10 times using del_all=true param."""
+        assert dbl_lst_factory.delete(2, del_all=True) == 10
+
+    @pytest.mark.dbl_lst_factory_data([2] * 10)
+    def test_length_with_10_nodes_delete_head_10_times(self, dbl_lst_factory):
+        """Deleting head value 10 times using del_all=true param."""
+        dbl_lst_factory.delete(2, del_all=True)
+        assert len(dbl_lst_factory) == 0
+
+    @pytest.mark.dbl_lst_factory_data([2, 1, 2, 1, 2, 1, 2, 1, 2, 1])
+    def test_delete_with_10_nodes_delete_all_even_indexes(self, dbl_lst_factory):
+        """Deleting all even index that have value 2 with del_all=true param."""
+        assert dbl_lst_factory.delete(2, del_all=True) == 5
+
+    @pytest.mark.dbl_lst_factory_data([2, 1, 2, 1, 2, 1, 2, 1, 2, 1])
+    def test_length_with_10_nodes_delete_all_even_indexes(self, dbl_lst_factory):
+        """Deleting all even index that have value 2 with del_all=true param."""
+        dbl_lst_factory.delete(2, del_all=True)
+        assert len(dbl_lst_factory) == 5
+
+    @pytest.mark.dbl_lst_factory_data([2, 1, 1, 1, 1, 1, 1, 1, 1, 1])
+    def test_delete_with_10_nodes_delete_all_nodes_but_head(self, dbl_lst_factory):
+        """Deleting all even index that have value 2 with del_all=true param."""
+        dbl_lst_factory.delete(1, del_num=9)
+        assert dbl_lst_factory.__str__() == "[2]"
+
+    def test_non_int_passed_as_param(self):
+        """Delete should return 0 if 'del_num' param is not int."""
+        ll = DblList()
+        assert ll.delete(1, del_num=1.1) == 0
+
+    def test_int_less_than_1_param(self):
+        """Delete should return 0 if 'del_num' is less than 1."""
+        ll = DblList()
+        assert ll.delete(1, del_num=0) == 0
+
+    def test_non_bool_passed_as_param(self):
+        """Delete should return 0 if 'del_all' param is not bool."""
+        ll = DblList()
+        assert ll.delete(1, del_all=1) == 0
