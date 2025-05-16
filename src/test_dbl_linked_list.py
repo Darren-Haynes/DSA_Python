@@ -178,3 +178,65 @@ class TestPopMethod:
         dbl_lst_factory.pop()
         dbl_lst_factory.pop()
         assert not dbl_lst_factory.head
+
+
+class TestAppendMethod:
+    def test_append_one_node_correct_head_value(self):
+        """If list empty, head should become the value."""
+        lst = DblList()
+        lst.append(1)
+        assert lst.head.value == 1
+
+    def test_append_two_nodes_correct_head_value(self):
+        """When append 2 nodes, the the first appended should be the head"""
+        lst = DblList()
+        lst.append(1)
+        lst.append(2)
+        assert lst.head.value == 1
+
+    def test_append_two_nodes_correct_tail(self):
+        """When append 2 nodes, the the 2nd appended should be the tail"""
+        lst = DblList()
+        lst.append(1)
+        lst.append(2)
+        assert lst.tail.value == 2
+
+    def test_append_two_nodes_correct_tail_prev(self):
+        """When append 2 nodes, the the 2nd appended should be the tail"""
+        lst = DblList()
+        lst.append(1)
+        lst.append(2)
+        assert lst.tail.prev == lst.head
+
+    def test_append_two_nodes_correct_head_correct_nxt_value(self):
+        """When append 2 nodes, the the second appended should be head.nxt's value"""
+        lst = DblList()
+        lst.append(1)
+        lst.append(2)
+        assert lst.head.nxt.value == 2
+
+    def test_append_three_nodes_correct_third_node_value(self):
+        """When append 3 nodes, last node appended has corrent value.
+        This is to test recusive function calls itself."""
+        lst = DblList()
+        lst.append(1)
+        lst.append(2)
+        lst.append(3)
+        assert lst.head.nxt.nxt.value == 3
+
+    def test_append_three_nodes_correct_third_node_nxt(self):
+        """When append 3 nodes, last node appended next is None"""
+        lst = DblList()
+        lst.append(1)
+        lst.append(2)
+        lst.append(3)
+        assert not lst.head.nxt.nxt.nxt
+
+    def test_append_three_nodes_correct_third_node_prev(self):
+        """When append 3 nodes, last node appended has corrent value.
+        This is to test recusive function calls itself."""
+        lst = DblList()
+        lst.append(1)
+        lst.append(2)
+        lst.append(3)
+        assert lst.tail.prev.value == 2
