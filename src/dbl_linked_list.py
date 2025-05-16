@@ -45,6 +45,7 @@ class DblList(LinkedList):
         """
         Add a node to the end of the list.
         value: must be supplied and supports any data type.
+        However values are restricted to a specific type with __strict
         """
         if not self.head:
             self.__type = type(value)
@@ -84,3 +85,58 @@ class DblList(LinkedList):
         self.tail = self.tail.prev
         self.tail.nxt = None
         return return_value
+
+    def delete(self, value, del_num=1, del_all=False):
+        """
+        Returns how many times the value was deleted from the list.
+        'del_num' parameter determines how many times a deletion will occur.
+        'del_num=1' (the default) will delete the first found instance only.
+        'del_all=True' will overide any value of 'del_num'
+        """
+        if type(del_num) is not int:
+            print("'del_num' param must be an int")
+            return 0
+
+        if type(del_all) is not bool:
+            print("'del_all' param must be a bool")
+            return 0
+
+        if del_num < 1:
+            print("'del_num=' parameter must be an int greater than 0")
+            return 0
+
+        if not self.head:
+            return 0
+
+        deleted = 0
+        # First keep checking if head matches
+        while self.head.value == value:
+            print(self.head.value)
+            self.head = self.head.nxt
+            deleted += 1
+            self.length -= 1
+            if not self.head:
+                self.tail = None
+                return deleted
+            if not del_all:
+                if deleted == del_num:
+                    return deleted
+
+        # Once head stops matching, continue through list
+        current = self.head.nxt
+        while current:
+            if current.value == value:
+                if self.tail == current:
+                    self.tail = self.tail.prev
+                    self.tail.nxt = None
+                else:
+                    current.nxt.prev = current.prev
+                    current.prev.nxt = current.nxt
+                deleted += 1
+                self.length -= 1
+                if not del_all:
+                    if deleted == del_num:
+                        return deleted
+            current = current.nxt
+
+        return deleted
