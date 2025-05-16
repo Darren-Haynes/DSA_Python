@@ -65,3 +65,46 @@ class TestDblListClassHead:
         """A DblList initializes with __stict as True passed as kw arg."""
         lst = DblList(strict=True)
         assert lst._LinkedList__strict
+
+
+class TestPushMethod:
+    def test_DblLinkedList_with_1_node_is_head(self, dbl_one_node):
+        """Push 1 value into DblList, that value should be the head's data"""
+        assert dbl_one_node.head.value == 1
+
+    def test_DblLinkedList_with_1_node_is_tail(self, dbl_one_node):
+        """Push 1 value into DblList, that value should be the head's data"""
+        assert dbl_one_node.tail.value == 1
+
+    def test_DblLinkedList_with_1_node_head_nxt_is_none(self, dbl_one_node):
+        """Push 1 value into DblList, head.nxt should be None"""
+        assert not dbl_one_node.head.nxt
+
+    def test_DblLinkedList_with_1_node_tail_nxt_is_none(self, dbl_one_node):
+        """Push 1 value into DblList, head.nxt should be None"""
+        assert not dbl_one_node.tail.nxt
+
+    @pytest.mark.dbl_lst_factory_data([1, 2])
+    def test_DblLinkedList_with_2_nodes_correct_head(self, dbl_lst_factory):
+        """2 values in DblList, last value pushed should be head's data"""
+        assert dbl_lst_factory.head.value == 2
+
+    @pytest.mark.dbl_lst_factory_data([1, 2])
+    def test_DblLinkedList_with_2_nodes_prev(self, dbl_lst_factory):
+        """2 values in DblList, first node pushed prev is head"""
+        assert dbl_lst_factory.head.nxt.prev == dbl_lst_factory.head
+
+    @pytest.mark.dbl_lst_factory_data([1, 2])
+    def test_DblList_with_2_nodes_correct_head_nxt_data(self, dbl_lst_factory):
+        """2 values in DblList, first value pushed should be head.nxt.data"""
+        assert dbl_lst_factory.head.nxt.value == 1
+
+    @pytest.mark.dbl_lst_factory_data([1, 2])
+    def test_DblLinkedList_with_2_nodes_correct_tail(self, dbl_lst_factory):
+        """2 values in DblList, first value pushed should be tail's value."""
+        assert dbl_lst_factory.tail.value == 1
+
+    @pytest.mark.dbl_lst_factory_data([1, 2])
+    def test_DblLinkedList_with_2_nodes_no_3rd_node(self, dbl_lst_factory):
+        """Push 2 values into DblList, there should be no 3rd node"""
+        assert not dbl_lst_factory.head.nxt.nxt
