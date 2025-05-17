@@ -14,8 +14,8 @@ class DblNode(Node):
 class DblList(LinkedList):
     def __init__(self, length=0, strict=False) -> None:
         super().__init__(length, strict)
-        self.__strict = strict
-        self.__type = None
+        self._strict = strict
+        self._type = None
 
     def push(self, value):
         """
@@ -24,14 +24,14 @@ class DblList(LinkedList):
 
         if not self.head:
             self.length += 1
-            self.__type = type(value)
+            self._type = type(value)
             first_node = DblNode(value)
             self.head = first_node
             self.tail = first_node
             return
 
-        if self.__strict:
-            if type(value) is not self.__type:
+        if self._strict:
+            if type(value) is not self._type:
                 print("Strict list cannot contain multiple types.")
                 return False
 
@@ -45,18 +45,18 @@ class DblList(LinkedList):
         """
         Add a node to the end of the list.
         value: must be supplied and supports any data type.
-        However values are restricted to a specific type with __strict
+        However values are restricted to a specific type with _strict
         """
         if not self.head:
-            self.__type = type(value)
+            self._type = type(value)
             first_node = DblNode(value)
             self.head = first_node
             self.tail = first_node
             self.length += 1
             return first_node.value
 
-        if self.__strict:
-            if type(value) is not self.__type:
+        if self._strict:
+            if type(value) is not self._type:
                 print("Strict list cannot contain multiple types.")
                 return False
 
@@ -140,3 +140,26 @@ class DblList(LinkedList):
             current = current.nxt
 
         return deleted
+
+    def _average(self, current):
+        if not current:
+            return 0
+        return self._average(current.nxt) + current.value
+
+    def average(self):
+        super().average()
+        """
+        Returns the average of all the values in the list.
+        """
+        if not self._strict:
+            print("Average function requires strict list.")
+            return
+
+        if self._type not in [int, float, complex]:
+            print("Average function only supports numerical values.")
+            return
+
+        total = self._average(self.head)
+        if total:
+            return total / self.length
+        return total
