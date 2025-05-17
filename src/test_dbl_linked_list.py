@@ -311,7 +311,7 @@ class TestTypeChecking:
     def test_push_first_node_has_correct___type_attribute(self, value, exp_type):
         lst = DblList()
         lst.push(value)
-        assert lst._DblList__type == exp_type
+        assert lst._type == exp_type
 
     params2 = [(1, 1.1), (1.1, 1), (1j, 1), ("1", 1)]
 
@@ -334,7 +334,7 @@ class TestTypeChecking:
     def test_append_first_node_has_correct___type_attribute(self, value, exp_type):
         lst = DblList()
         lst.append(value)
-        assert lst._DblList__type == exp_type
+        assert lst._type == exp_type
 
     params2 = [(1, 1.1), (1.1, 1), (1j, 1), ("1", 1)]
 
@@ -497,11 +497,11 @@ class TestDeleteMethod:
 class TestAverageMethod:
     def test_list_not_strict_print_statement(self, capsys):
         """Strict list with non numerical value prints correct statement."""
-        lst = DblList()
+        lst = DblList(strict=True)
         lst.push("1")
         lst.average()
         captured = capsys.readouterr()
-        assert captured.out == ("Average function requires strict link.\n")
+        assert captured.out == "Average function requires strict list.\n"
 
     def test_list_wrong_type_print_statement(self, capsys):
         """Strict list with non numerical value prints correct statement."""
