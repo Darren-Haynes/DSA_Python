@@ -492,3 +492,29 @@ class TestDeleteMethod:
         """Delete should return 0 if 'del_all' param is not bool."""
         ll = DblList()
         assert ll.delete(1, del_all=1) == 0
+
+
+class TestAverageMethod:
+    def test_list_not_strict_print_statement(self, capsys):
+        """Strict list with non numerical value prints correct statement."""
+        lst = DblList()
+        lst.push("1")
+        lst.average()
+        captured = capsys.readouterr()
+        assert captured.out == ("Average function requires strict link.\n")
+
+    def test_list_wrong_type_print_statement(self, capsys):
+        """Strict list with non numerical value prints correct statement."""
+        lst = DblList(strict=True)
+        lst.push("1")
+        lst.average()
+        captured = capsys.readouterr()
+        assert captured.out == "Average function only supports numerical values.\n"
+
+    def test_list_of_right_type_no_head(self):
+        """If strict and right type but empty list, return None."""
+        lst = DblList(strict=True)
+        assert not lst.average()
+
+    def test_empty_list_returns_none(self):
+        """An empty list should return."""

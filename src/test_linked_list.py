@@ -718,34 +718,54 @@ class TestTailWithDeleteMethod:
 
 
 class TestAverageMethod:
-    def test_empty_list_returns_zero(self):
-        """An empty list should return an average of 0."""
+    def test_list_not_strict_print_statement(self, capsys):
+        """Strict list with non numerical value prints correct statement."""
         lst = LinkedList()
-        assert lst.average() == 0
+        lst.push("1")
+        lst.average()
+        captured = capsys.readouterr()
+        assert captured.out == ("Average function requires strict link.\n")
+
+    def test_list_wrong_type_print_statement(self, capsys):
+        """Strict list with non numerical value prints correct statement."""
+        lst = LinkedList(strict=True)
+        lst.push("1")
+        lst.average()
+        captured = capsys.readouterr()
+        assert captured.out == "Average function only supports numerical values.\n"
+
+    def test_list_of_right_type_no_head(self):
+        """If strict and right type but empty list, return None."""
+        lst = LinkedList(strict=True)
+        assert not lst.average()
+
+    def test_empty_list_returns_none(self):
+        """An empty list should return."""
+        lst = LinkedList(strict=True)
+        assert not lst.average()
 
     def test_list_with_single_node_with_value_0(self):
         """If single node with value 0, 0 should be returned."""
-        lst = LinkedList()
+        lst = LinkedList(strict=True)
         lst.push(0)
         assert lst.average() == 0
 
     @pytest.mark.lst_factory_data([0, 0])
-    def test_list_with_2_nodes_both_with_values_0(self, lst_factory):
+    def test_list_with_2_nodes_both_with_values_0(self, strict_lst_factory):
         """If list has 2 nodes, eachwith value 0, 0 should be returned."""
-        lst_factory = LinkedList()
-        assert lst_factory.average() == 0
+        assert strict_lst_factory.average() == 0
 
     @pytest.mark.parametrize("value,avg", [(i, i) for i in range(1, 11)])
     def test_list_with_single_node_with_value(self, value, avg):
         """If single node with value > 0, that number should be returned."""
-        lst = LinkedList()
+        lst = LinkedList(strict=True)
         lst.push(value)
         assert lst.average() == avg
 
     @pytest.mark.lst_factory_data([i for i in range(1, 11)])
-    def test_list_with_10_nodes_with_unque_values(self, lst_factory):
+    def test_list_with_10_nodes_with_unque_values(self, strict_lst_factory):
         """10 nodes with values 1..10 should return an average of 5.5"""
-        assert lst_factory.average() == 5.5
+        assert strict_lst_factory.average() == 5.5
 
 
 class TestPeekMethods:
