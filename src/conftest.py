@@ -23,9 +23,16 @@ def one_node_appended():
 @pytest.fixture
 def lst_factory(request):
     marker = request.node.get_closest_marker("lst_factory_data")
-
-    # Do something with the data
     lst = LinkedList()
+    for value in marker.args[0]:
+        lst.push(value)
+    return lst
+
+
+@pytest.fixture
+def strict_lst_factory(request):
+    marker = request.node.get_closest_marker("lst_factory_data")
+    lst = LinkedList(strict=True)
     for value in marker.args[0]:
         lst.push(value)
     return lst

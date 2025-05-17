@@ -292,8 +292,14 @@ class LinkedList:
         """
         Returns the average of all the values in the list.
         """
-        if not self.head:
-            return 0
+        if not self.__strict:
+            print("Average function requires strict link.")
+            return
+
+        if self.__type not in [int, float, complex]:
+            print("Average function only supports numerical values.")
+            return
+
         total = self._average(self.head)
         if total:
             return total / self.length
