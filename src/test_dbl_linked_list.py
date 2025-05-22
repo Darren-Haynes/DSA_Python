@@ -54,17 +54,17 @@ class TestDblListClassHead:
     def test_DblList_initiates_with_type_None(self):
         """A DblList initializes with type as None."""
         lst = DblList()
-        assert not lst._LinkedList__type
+        assert not lst._type
 
     def test_DblList_initiates_with_strict_False_as_default(self):
         """A DblList initializes with __stict as False."""
         lst = DblList()
-        assert not lst._LinkedList__strict
+        assert not lst._strict
 
     def test_DblList_initiates_with_strict_True(self):
         """A DblList initializes with __stict as True passed as kw arg."""
         lst = DblList(strict=True)
-        assert lst._LinkedList__strict
+        assert lst._strict
 
 
 class TestPushMethod:
@@ -495,13 +495,13 @@ class TestDeleteMethod:
 
 
 class TestAverageMethod:
-    def test_list_not_strict_print_statement(self, capsys):
+    def test_list_strict_print_statement(self, capsys):
         """Strict list with non numerical value prints correct statement."""
         lst = DblList(strict=True)
         lst.push("1")
         lst.average()
         captured = capsys.readouterr()
-        assert captured.out == "Average function requires strict list.\n"
+        assert captured.out == "Average function only supports numerical values.\n"
 
     def test_list_wrong_type_print_statement(self, capsys):
         """Strict list with non numerical value prints correct statement."""
@@ -511,6 +511,14 @@ class TestAverageMethod:
         captured = capsys.readouterr()
         assert captured.out == "Average function only supports numerical values.\n"
 
+    def test_list_non_strict_list_print_statement(self, capsys):
+        """Strict list with non numerical value prints correct statement."""
+        lst = DblList()
+        lst.push("1")
+        lst.average()
+        captured = capsys.readouterr()
+        assert captured.out == "Average function requires strict list.\n"
+
     def test_list_of_right_type_no_head(self):
         """If strict and right type but empty list, return None."""
         lst = DblList(strict=True)
@@ -518,3 +526,78 @@ class TestAverageMethod:
 
     def test_empty_list_returns_none(self):
         """An empty list should return."""
+        lst = DblList(strict=True)
+        assert not lst.average()
+
+    def test_list_with_single_node_with_value_0(self):
+        """If single node with value 0, 0 should be returned."""
+        lst = DblList(strict=True)
+        lst.push(0)
+        assert lst.average() == 0
+
+    @pytest.mark.lst_factory_data([0, 0])
+    def test_list_with_2_nodes_both_with_values_0(self, strict_lst_factory):
+        """If list has 2 nodes, eachwith value 0, 0 should be returned."""
+        assert strict_lst_factory.average() == 0
+
+    @pytest.mark.parametrize("value,avg", [(i, i) for i in range(1, 11)])
+    def test_list_with_single_node_with_value(self, value, avg):
+        """If single node with value > 0, that number should be returned."""
+        lst = DblList(strict=True)
+        lst.push(value)
+        assert lst.average() == avg
+
+    @pytest.mark.lst_factory_data([i for i in range(1, 11)])
+    def test_list_with_10_nodes_with_unque_values(self, strict_lst_factory):
+        """10 nodes with values 1..10 should return an average of 5.5"""
+        assert strict_lst_factory.average() == 5.5
+
+
+class TestPeekMethods:
+    def test_peek_with_empty_list(self):
+        """Empty list returns None when you peek."""
+        lst = DblList()
+        assert not lst.peek()
+
+    def test_peek_with_with_single_node(self, one_node):
+        """List with single node should peek that node's value"""
+        assert one_node.peek() == 1
+
+    def test_peek_right_with_with_single_node(self, one_node):
+        """List with single node should peek_right that node's value"""
+        assert one_node.peek_right() == 1
+
+    def test_peek_right_with_empty_list(self):
+        """Empty list returns None when you peek."""
+        lst = DblList()
+        assert not lst.peek_right()
+
+    def test_peek_right_with_with_2_nodes(self, one_node):
+        """List with 2 nodes should peek_right that node's value"""
+        assert one_node.peek_right() == 1
+
+
+class TestFind:
+    def test_find_with_empty_list(self):
+        """Find on an empty list returns none."""
+        lst = DblList()
+        assert not lst.find(1)
+
+    def test_find_value_single_node_match(self, one_node):
+        """Find should return True if node matches in one node list."""
+        assert one_node.find(1)
+
+    def test_find_value_single_node_no_match(self, one_node):
+        """Find should return False if node doesn't match in one node list."""
+        assert not one_node.find(2)
+
+    @pytest.mark.parametrize("value, result", [(i, True) for i in range(1, 10)])
+    @pytest.mark.lst_factory_data([i for i in range(1, 11)])
+    def test_list_10_nodes_with_unque_values(self, lst_factory, value, result):
+        """List with 10 nodes, every node a match"""
+        assert lst_factory.find(value) == result
+
+    @pytest.mark.lst_factory_data([i for i in range(1, 11)])
+    def test_list_10_nodes_no_matches(self, lst_factory):
+        """List with 10 nodes, find value doesn't match"""
+        assert not lst_factory.find(11)

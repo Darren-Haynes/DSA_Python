@@ -54,27 +54,27 @@ class TestLinkedListClassHead:
     def test_LinkedList_initiates_with_type_None(self):
         """A LinkedList initializes with type as None."""
         lst = LinkedList()
-        assert not lst._LinkedList__type
+        assert not lst._type
 
     def test_LinkedList_initiates_with_strict_False_as_default(self):
         """A LinkedList initializes with __stict as False."""
         lst = LinkedList()
-        assert not lst._LinkedList__strict
+        assert not lst._strict
 
     def test_LinkedList_initiates_with_strict_True(self):
         """A LinkedList initializes with __stict as True passed as kw arg."""
         lst = LinkedList(strict=True)
-        assert lst._LinkedList__strict
+        assert lst._strict
 
 
 class TestTypeChecking:
     params = [(1, int), (1.1, float), (1j, complex), ("1", str)]
 
     @pytest.mark.parametrize("value,exp_type", params)
-    def test_push_first_node_has_correct___type_attribute(self, value, exp_type):
+    def test_push_first_node_has_correct__type_attribute(self, value, exp_type):
         lst = LinkedList()
         lst.push(value)
-        assert lst._LinkedList__type == exp_type
+        assert lst._type == exp_type
 
     params2 = [(1, 1.1), (1.1, 1), (1j, 1), ("1", 1)]
 
@@ -94,10 +94,10 @@ class TestTypeChecking:
         assert lst.head.value == node2
 
     @pytest.mark.parametrize("value,exp_type", params)
-    def test_append_first_node_has_correct___type_attribute(self, value, exp_type):
+    def test_append_first_node_has_correct_type_attribute(self, value, exp_type):
         lst = LinkedList()
         lst.append(value)
-        assert lst._LinkedList__type == exp_type
+        assert lst._type == exp_type
 
     params2 = [(1, 1.1), (1.1, 1), (1j, 1), ("1", 1)]
 

@@ -147,7 +147,6 @@ class DblList(LinkedList):
         return self._average(current.nxt) + current.value
 
     def average(self):
-        super().average()
         """
         Returns the average of all the values in the list.
         """

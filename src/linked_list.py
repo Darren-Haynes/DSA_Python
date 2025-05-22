@@ -32,8 +32,8 @@ class LinkedList:
         self.head = None
         self.tail = None
         self.length = length
-        self.__strict = strict
-        self.__type = None
+        self._strict = strict
+        self._type = None
 
     def __str__(self):
         """
@@ -68,14 +68,14 @@ class LinkedList:
 
         if not self.head:
             self.length += 1
-            self.__type = type(value)
+            self._type = type(value)
             first_node = Node(value)
             self.head = first_node
             self.tail = first_node
             return
 
-        if self.__strict:
-            if type(value) is not self.__type:
+        if self._strict:
+            if type(value) is not self._type:
                 print("Strict list cannot contain multiple types.")
                 return False
 
@@ -114,15 +114,15 @@ class LinkedList:
         value: must be supplied and supports any data type.
         """
         if not self.head:
-            self.__type = type(value)
+            self._type = type(value)
             first_node = Node(value)
             self.head = first_node
             self.tail = first_node
             self.length += 1
             return first_node.value
 
-        if self.__strict:
-            if type(value) is not self.__type:
+        if self._strict:
+            if type(value) is not self._type:
                 print("Strict list cannot contain multiple types.")
                 return False
 
@@ -292,11 +292,11 @@ class LinkedList:
         """
         Returns the average of all the values in the list.
         """
-        if not self.__strict:
+        if not self._strict:
             print("Average function requires strict link.")
             return
 
-        if self.__type not in [int, float, complex]:
+        if self._type not in [int, float, complex]:
             print("Average function only supports numerical values.")
             return
 
