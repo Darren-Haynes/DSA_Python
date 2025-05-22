@@ -139,3 +139,22 @@ class TestDequeueMethod:
         queue.enqueue(2)
         queue.dequeue()
         assert queue.length == 1
+
+
+class TestPeekMethod:
+    def test_peek_empty_queue(self):
+        """Empty queue should return none."""
+        q = Queue()
+        assert not q.peek()
+
+    def test_peek_one_node(self):
+        """When list has single node that node's value should return."""
+        q = Queue()
+        q.enqueue(1)
+        assert q.peek() == 1
+
+    def test_peek_two_nodes(self):
+        """When list has two nodes, the first node's value should return."""
+        q = Queue()
+        q.enqueue(1)
+        assert q.peek() == 1
