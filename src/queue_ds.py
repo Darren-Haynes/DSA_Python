@@ -50,3 +50,11 @@ class Queue:
 
         self.head = self.head.nxt
         return ret_val
+
+    def peek(self):
+        """
+        Peek the value of the head node.
+        """
+        if not self.head:
+            return
+        return self.head.value
