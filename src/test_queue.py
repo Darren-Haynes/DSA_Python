@@ -33,20 +33,58 @@ class TestNode:
 class TestQueueClassHead:
     def test_Queue_initiates_with_head_attribute(self):
         """A Queue initializes with the .head attribute."""
-        lst = Queue()
-        assert hasattr(lst, "head")
+        queue = Queue()
+        assert hasattr(queue, "head")
 
     def test_Queue_initiates_with_head_as_None(self):
         """A Queue initializes with the .head attribute."""
-        lst = Queue()
-        assert not lst.head
+        queue = Queue()
+        assert not queue.head
 
     def test_Queue_initiates_with_tail_as_None(self):
         """A Queue initializes with the .tail attribute."""
-        lst = Queue()
-        assert not lst.tail
+        queue = Queue()
+        assert not queue.tail
 
     def test_Queue_initiates_with_length_0(self):
         """A Queue initializes with the .length attribute."""
-        lst = Queue()
-        assert lst.length == 0
+        queue = Queue()
+        assert queue.length == 0
+
+
+class TestEnqueueMethod:
+    param_values = [(i, i) for i in range(1, 4)]
+
+    def test_enqueue_one_node_correct_head_value(self):
+        """If queue empty, head should become the value."""
+        queue = Queue()
+        queue.enqueue(1)
+        assert queue.head.value == 1
+
+    def test_enqueue_one_node_correct_tail_value(self):
+        """If queue empty, tail should become the value."""
+        queue = Queue()
+        queue.enqueue(1)
+        assert queue.tail.value == 1
+
+    def test_enqueue_two_nodes_correct_tail_value(self):
+        """When enqueue 2 nodes, the the last enqueued should be the tail"""
+        queue = Queue()
+        queue.enqueue(1)
+        queue.enqueue(2)
+        assert queue.tail.value == 2
+
+    def test_enqueue_two_nodes_correct_tail_correct_prev_value(self):
+        """When enqueue 2 nodes, the the first enqueued should be tail.prev value"""
+        queue = Queue()
+        queue.enqueue(1)
+        queue.enqueue(2)
+        assert queue.tail.prev.value == 1
+
+    @pytest.mark.parametrize("num_of_nodes, queue_len", param_values)
+    def test_enqueue_right_length(self, num_of_nodes, queue_len):
+        """For each node added length should increase by one."""
+        queue = Queue()
+        for i in range(0, num_of_nodes):
+            queue.enqueue(i)
+        assert queue.length == queue_len
