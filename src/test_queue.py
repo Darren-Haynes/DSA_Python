@@ -88,3 +88,54 @@ class TestEnqueueMethod:
         for i in range(0, num_of_nodes):
             queue.enqueue(i)
         assert queue.length == queue_len
+
+
+class TestDequeueMethod:
+    def test_dequeue_empty_queue_returns_None(self):
+        queue = Queue()
+        assert not queue.dequeue()
+
+    def test_queue_dequeue_one_node_head_is_none(self):
+        """Dequeue queue with one node should have no head."""
+        queue = Queue()
+        queue.enqueue(1)
+        queue.dequeue()
+        assert not queue.head
+
+    def test_queue_dequeue_one_node_tail_is_none(self):
+        """Dequeue queue with one node should have no tail."""
+        queue = Queue()
+        queue.enqueue(1)
+        queue.dequeue()
+        assert not queue.tail
+
+    def test_queue_dequeue_one_node_length_is_0(self):
+        """Dequeue queue with one node should be length 0."""
+        queue = Queue()
+        queue.enqueue(1)
+        queue.dequeue()
+        assert queue.length == 0
+
+    def test_queue_two_nodes_pop_one_correct_head(self):
+        """Dequeue queue with two nodes has correct head."""
+        queue = Queue()
+        queue.enqueue(1)
+        queue.enqueue(2)
+        queue.dequeue()
+        assert queue.head.value == 2
+
+    def test_queue_two_nodes_pop_one_correct_tail(self):
+        """Dequeue queue with two nodes has correct tail."""
+        queue = Queue()
+        queue.enqueue(1)
+        queue.enqueue(2)
+        queue.dequeue()
+        assert queue.tail.value == 2
+
+    def test_queue_two_nodes_pop_one_correct_length(self):
+        """Dequeue queue with two nodes has correct length 1."""
+        queue = Queue()
+        queue.enqueue(1)
+        queue.enqueue(2)
+        queue.dequeue()
+        assert queue.length == 1
