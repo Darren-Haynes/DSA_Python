@@ -1,6 +1,6 @@
 import pytest
 
-from queue_ds import Queue, Node
+from queue import Queue, Node
 
 
 class TestNode:
