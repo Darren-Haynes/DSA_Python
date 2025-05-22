@@ -158,3 +158,26 @@ class TestPeekMethod:
         q = Queue()
         q.enqueue(1)
         assert q.peek() == 1
+
+
+class TestClearMethod:
+    def test_clear_head_is_none(self):
+        """Clear queue with one node head should be none."""
+        q = Queue()
+        q.enqueue(1)
+        q.clear()
+        assert not q.head
+
+    def test_clear_tail_is_none(self):
+        """Clear queue with one node tail should be none."""
+        q = Queue()
+        q.enqueue(1)
+        q.clear()
+        assert not q.tail
+
+    def test_clear_length_is_0(self):
+        """Clear queue with one node, length should be 0."""
+        q = Queue()
+        q.enqueue(1)
+        q.clear()
+        assert q.length == 0

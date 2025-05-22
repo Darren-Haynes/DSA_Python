@@ -58,3 +58,12 @@ class Queue:
         if not self.head:
             return
         return self.head.value
+
+    def clear(self):
+        """
+        Empty queue of all node.
+        """
+        self.head = None
+        self.tail = None
+        self.length = 0
+        return
