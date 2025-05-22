@@ -32,3 +32,21 @@ class Queue:
         node.prev = self.tail
         self.tail.nxt = node
         self.tail = node
+        return
+
+    def dequeue(self):
+        """
+        Dequeue value from head of queue.
+        """
+        if not self.head:
+            return
+
+        self.length -= 1
+        ret_val = self.head.value
+        if not self.head.nxt:
+            self.head = None
+            self.tail = None
+            return ret_val
+
+        self.head = self.head.nxt
+        return ret_val
